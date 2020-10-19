@@ -194,7 +194,6 @@ public class ToggleFragment  extends Fragment implements SensorEventListener
             txtAccelerometerX.setText(String.format("%.3f", event.values[0]));
             txtAccelerometerY.setText(String.format("%.3f",  event.values[1]));
             txtAccelerometerZ.setText(String.format("%.3f",  event.values[2]));
-
         }
 
         if(event.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD)
