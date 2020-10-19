@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/togglesenser"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/colorWhite"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <TableRow
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="Sensors"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="X"
+                android:textColor="@color/colorGreen"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="Y"
+                android:textColor="@color/colorRed"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:text="Z"
+                android:textColor="@color/colorBlue"
+                android:textSize="15sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Accelerometer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Accelerometer"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/AccelerometerX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/AccelerometerY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/AccelerometerZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Gyroscope"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Gyroscope"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/GyroscopeX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/GyroscopeY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/GyroscopeZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Magnetic_Field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Magnetic Field"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/Magnetic_FieldX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/Magnetic_FieldY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/Magnetic_FieldZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/GPS_Position"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="GPS Position"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/GPS_PositionX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/GPS_PositionY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/GPS_PositionZ"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Orientation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Orientation"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/OrientationX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/OrientationY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/OrientationZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Linear_Accel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Linear Accel"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/Linear_AccelX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/Linear_AccelY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/Linear_AccelZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Gravity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Gravity"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/GravityX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/GravityY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/GravityZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Rotation_Vect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Rotation Vect"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/Rotation_VectX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/Rotation_VectY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorRed"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/Rotation_VectZ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Pressure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorWhite"
+                android:gravity="left"
+                android:text="Pressure"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"/>
+            <TextView
+                android:id="@+id/PressureValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

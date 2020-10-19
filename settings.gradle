@@ -1,0 +1,4 @@
+include ':app'
+include ':pseudorange'
+project(':pseudorange').projectDir = new File(rootDir, 'GNSSLogger/pseudorange/')
+project(':app').projectDir = new File(rootDir, 'GNSSLogger/app/')
