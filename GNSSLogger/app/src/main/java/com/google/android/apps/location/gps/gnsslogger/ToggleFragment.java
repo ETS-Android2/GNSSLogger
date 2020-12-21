@@ -35,6 +35,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import static android.content.Context.SENSOR_SERVICE;
 
+@SuppressLint("ValidFragment")
 public class ToggleFragment  extends Fragment implements SensorEventListener
 {
     SensorManager sensorManager;

@@ -35,6 +35,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.Spinner;
@@ -48,6 +49,9 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class SettingsFragment extends Fragment {
 
+    public Button changeButton;
+    public EditText changeText;
+
   public static final String TAG = ":SettingsFragment";
 
   /** Position in the drop down menu of the auto ground truth mode */
@@ -58,7 +62,6 @@ public class SettingsFragment extends Fragment {
 
   private GnssContainer mGpsContainer;
   private HelpDialog helpDialog;
-
   /**
    * The {@link RealTimePositionVelocityCalculator} set for receiving the ground truth mode switch
    */
@@ -91,9 +94,15 @@ public class SettingsFragment extends Fragment {
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    final View view = inflater.inflate(R.layout.fragment_main, container, false /* attachToRoot */);
 
-    final Switch registerLocation = (Switch) view.findViewById(R.id.register_location);
+      final View view = inflater.inflate(R.layout.fragment_main, container, false /* attachToRoot */);
+
+      changeButton = (Button) view.findViewById(R.id.device_name_button);
+      changeText = (EditText)view.findViewById(R.id.device_name_id);
+      changeText.setHint("Device_Name(" +Build.MODEL+")");
+
+
+      final Switch registerLocation = (Switch) view.findViewById(R.id.register_location); //location 버튼
     final TextView registerLocationLabel =
         (TextView) view.findViewById(R.id.register_location_label);
     //set the switch to OFF
@@ -102,16 +111,16 @@ public class SettingsFragment extends Fragment {
     registerLocation.setOnCheckedChangeListener(
         new OnCheckedChangeListener() {
 
-          @Override
-          public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+              @Override
+              public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-            if (isChecked) {
-              mGpsContainer.registerLocation();
-              registerLocationLabel.setText("Switch is ON");
-            } else {
-              mGpsContainer.unregisterLocation();
-              registerLocationLabel.setText("Switch is OFF");
-            }
+                  if (isChecked) {
+                      mGpsContainer.registerLocation();
+                      registerLocationLabel.setText("Switch is ON");
+                  } else {
+                      mGpsContainer.unregisterLocation();
+                      registerLocationLabel.setText("Switch is OFF");
+                  }
           }
         });
 

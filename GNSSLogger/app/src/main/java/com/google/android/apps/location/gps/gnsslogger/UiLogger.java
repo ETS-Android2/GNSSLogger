@@ -58,17 +58,21 @@ public class UiLogger implements GnssListener {
   public void onTTFFReceived(long l) {}
 
   @Override
-  public void onProviderDisabled(String provider) {
+  public void onProviderDisabled(String provider)
+  {
     logLocationEvent("onProviderDisabled: " + provider);
   }
 
+  //location log 로그찍히는쪽
   @Override
-  public void onLocationChanged(Location location) {
+  public void onLocationChanged(Location location)
+  {
     logLocationEvent("onLocationChanged: " + location + "\n");
   }
 
   @Override
-  public void onLocationStatusChanged(String provider, int status, Bundle extras) {
+  public void onLocationStatusChanged(String provider, int status, Bundle extras)
+  {
     String message =
         String.format(
             "onStatusChanged: provider=%s, status=%s, extras=%s",
@@ -76,8 +80,10 @@ public class UiLogger implements GnssListener {
     logLocationEvent(message);
   }
 
+  //Measurement  로그출력
   @Override
-  public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
+  public void onGnssMeasurementsReceived(GnssMeasurementsEvent event)
+  {
     StringBuilder builder = new StringBuilder("[ GnssMeasurementsEvent:\n\n");
 
     builder.append(toStringClock(event.getClock()));
@@ -249,18 +255,23 @@ public class UiLogger implements GnssListener {
     logNavigationMessageEvent("onStatusChanged: " + getGnssNavigationMessageStatus(status));
   }
 
+  //GNSS Status 로그 출력
   @Override
-  public void onGnssStatusChanged(GnssStatus gnssStatus) {
+  public void onGnssStatusChanged(GnssStatus gnssStatus)
+  {
     logStatusEvent("onGnssStatusChanged: " + gnssStatusToString(gnssStatus));
   }
 
+  //Nmea 로그 출력
   @Override
-  public void onNmeaReceived(long timestamp, String s) {
+  public void onNmeaReceived(long timestamp, String s)
+  {
     logNmeaEvent(String.format("onNmeaReceived: timestamp=%d, %s", timestamp, s));
   }
 
   @Override
-  public void onListenerRegistration(String listener, boolean result) {
+  public void onListenerRegistration(String listener, boolean result)
+  {
     logEvent("Registration", String.format("add%sListener: %b", listener, result), USED_COLOR);
   }
 
@@ -268,25 +279,32 @@ public class UiLogger implements GnssListener {
     logEvent("Measurement", event, USED_COLOR);
   }
 
+  //Navigation Message 로그출력
   private void logNavigationMessageEvent(String event) {
     logEvent("NavigationMsg", event, USED_COLOR);
   }
 
-  private void logStatusEvent(String event) {
+  private void logStatusEvent(String event)
+  {
     logEvent("Status", event, USED_COLOR);
   }
 
-  private void logNmeaEvent(String event) {
+  private void logNmeaEvent(String event)
+  {
     logEvent("Nmea", event, USED_COLOR);
   }
 
-  private void logEvent(String tag, String message, int color) {
+  private void logEvent(String tag, String message, int color)
+  {
     String composedTag = GnssContainer.TAG + tag;
     Log.d(composedTag, message);
     logText(tag, message, color);
   }
 
-  private void logText(String tag, String text, int color) {
+
+  //text 로그
+  private void logText(String tag, String text, int color)
+  {
     UIFragmentComponent component = getUiFragmentComponent();
     if (component != null) {
       component.logTextFragment(tag, text, color);
@@ -334,8 +352,12 @@ public class UiLogger implements GnssListener {
 
   private String gnssStatusToString(GnssStatus gnssStatus) {
 
+    //여기서 시작합니다. 로그가 쌓이죠
     StringBuilder builder = new StringBuilder("SATELLITE_STATUS | [Satellites:\n");
-    for (int i = 0; i < gnssStatus.getSatelliteCount(); i++) {
+
+    for (int i = 0; i < gnssStatus.getSatelliteCount(); i++)
+    {
+      ;
       builder
           .append("Constellation = ")
           .append(getConstellationName(gnssStatus.getConstellationType(i)))
@@ -352,7 +374,8 @@ public class UiLogger implements GnssListener {
     return builder.toString();
   }
 
-  private void logLocationEvent(String event) {
+  private void logLocationEvent(String event)
+  {
     logEvent("Location", event, USED_COLOR);
   }
 

@@ -84,14 +84,19 @@ public class FileLogger implements GnssListener {
   /**
    * Start a new file logging process.
    */
-  public void startNewLog() {
-    synchronized (mFileLock) {
+  public void startNewLog()
+  {
+    synchronized (mFileLock)
+    { //multi-thread로 동시접근되는것을 막는다
       File baseDirectory;
-      String state = Environment.getExternalStorageState();
-      if (Environment.MEDIA_MOUNTED.equals(state)) {
+      String state = Environment.getExternalStorageState(); //상태
+      if (Environment.MEDIA_MOUNTED.equals(state))
+      {
         baseDirectory = new File(Environment.getExternalStorageDirectory(), FILE_PREFIX);
-        baseDirectory.mkdirs();
-      } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+        baseDirectory.mkdirs(); //파일을 생성합니다.
+      }
+      else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+      {
         logError("Cannot write to external storage.");
         return;
       } else {
@@ -105,9 +110,11 @@ public class FileLogger implements GnssListener {
       File currentFile = new File(baseDirectory, fileName);
       String currentFilePath = currentFile.getAbsolutePath();
       BufferedWriter currentFileWriter;
-      try {
+      try
+      {
         currentFileWriter = new BufferedWriter(new FileWriter(currentFile));
-      } catch (IOException e) {
+      } catch (IOException e)
+      {
         logException("Could not open file: " + currentFilePath, e);
         return;
       }
@@ -399,7 +406,8 @@ public class FileLogger implements GnssListener {
     mFileWriter.newLine();
   }
 
-  private void logException(String errorMessage, Exception e) {
+  private void logException(String errorMessage, Exception e)
+  {
     Log.e(GnssContainer.TAG + TAG, errorMessage, e);
     Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
   }

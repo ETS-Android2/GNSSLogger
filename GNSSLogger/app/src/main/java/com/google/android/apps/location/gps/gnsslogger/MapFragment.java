@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.google.android.apps.location.gps.gnsslogger;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,13 +56,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
   private Marker mLastLocationMarkerRaw = null;
   private Marker mLastLocationMarkerDevice = null;
 
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
+
+
+  @Nullable
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.map_fragment, container, false);
+
     mMapView = ((MapView) rootView.findViewById(R.id.map));
     mMapView.onCreate(savedInstanceState);
+
     mMapView.getMapAsync(this);
+
     MapsInitializer.initialize(getActivity());
 
     RealTimePositionVelocityCalculator currentPositionVelocityCalculator =
@@ -73,6 +84,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     return rootView;
   }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    mMapView.onStart();
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    mMapView.onStop();
+  }
+
+
 
   @Override
   public void onResume() {
@@ -98,7 +123,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
   }
 
   @Override
-  public void onMapReady(GoogleMap googleMap) {
+  public void onMapReady(GoogleMap googleMap)
+  {
     mMap = googleMap;
     mMap.setMyLocationEnabled(false);
     mMap.getUiSettings().setZoomControlsEnabled(true);

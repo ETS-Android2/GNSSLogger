@@ -44,7 +44,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.StaticLayout;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -80,6 +85,12 @@ public class MainActivity extends AppCompatActivity
   private Fragment[] mFragments;
   private GoogleApiClient mGoogleApiClient;
   private boolean mAutoSwitchGroundTruthMode;
+
+  public static Context context;
+  public String DeviceName = Build.MODEL;
+
+  private  SettingsFragment settingsFragment;
+
   private final ActivityDetectionBroadcastReceiver mBroadcastReceiver =
       new ActivityDetectionBroadcastReceiver();
 
@@ -141,6 +152,14 @@ public class MainActivity extends AppCompatActivity
     setContentView(R.layout.activity_main);
     buildGoogleApiClient();
    requestPermissionAndSetupFragments(this);
+    context=this;
+
+ /*   if (savedInstanceState == null) {
+      MainFragment mainFragment = new MainFragment();
+      getSupportFragmentManager().beginTransaction()
+              .replace(R.id.mainFragment, mainFragment, "main")
+              .commit();
+    } */
   }
 
   protected PendingIntent createActivityDetectionPendingIntent() {
@@ -180,6 +199,22 @@ public class MainActivity extends AppCompatActivity
       Log.i(TAG, "Connection suspended");
     }
   }
+
+  //디바이스 이름을 수정합니다.
+  public void DeviceIdChange(View view)
+  {
+    String changeText=settingsFragment.changeText.getText().toString();
+    if (changeText.length() == 0)
+    {
+      Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+    }
+    else
+      {
+        DeviceName=changeText;
+       Toast.makeText(this, "Device Name Changed : "+DeviceName, Toast.LENGTH_SHORT).show();
+    }
+  }
+
 
   /**
    * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the
@@ -255,7 +290,8 @@ public class MainActivity extends AppCompatActivity
   }
 
   //메뉴바를 구성합니다.
-  private void setupFragments() {
+  private void setupFragments()
+  {
     mUiLogger = new UiLogger();
     mRealTimePositionVelocityCalculator = new RealTimePositionVelocityCalculator();
     mRealTimePositionVelocityCalculator.setMainActivity(this);
@@ -272,7 +308,8 @@ public class MainActivity extends AppCompatActivity
             mRealTimePositionVelocityCalculator,
             mAgnssUiLogger);
     mFragments = new Fragment[NUMBER_OF_FRAGMENTS];
-    SettingsFragment settingsFragment = new SettingsFragment();
+   // SettingsFragment settingsFragment = new SettingsFragment();
+    settingsFragment = new SettingsFragment();
     settingsFragment.setGpsContainer(mGnssContainer);
     settingsFragment.setRealTimePositionVelocityCalculator(mRealTimePositionVelocityCalculator);
     settingsFragment.setAutoModeSwitcher(this);

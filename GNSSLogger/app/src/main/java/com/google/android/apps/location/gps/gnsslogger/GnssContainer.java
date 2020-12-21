@@ -16,6 +16,7 @@
 
 package com.google.android.apps.location.gps.gnsslogger;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.GnssMeasurementsEvent;
 import android.location.GnssNavigationMessage;
@@ -165,6 +166,7 @@ public class GnssContainer {
         @Override
         public void onFirstFix(int ttff) {}
 
+        //GNSS 위성상태를 보고하귀위해 주기적으로 호출된다
         @Override
         public void onSatelliteStatusChanged(GnssStatus status) {
           for (GnssListener logger : mLoggers) {
@@ -234,14 +236,18 @@ public class GnssContainer {
     return mLogNmeas;
   }
 
-  public void registerLocation() {
-    boolean isGpsProviderEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    if (isGpsProviderEnabled) {
+  @SuppressLint("MissingPermission")
+  public void registerLocation()
+  {
+    boolean isGpsProviderEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER); //gps가 활성화가 되어있는지 확인
+    if (isGpsProviderEnabled) //활성되어있는경우
+    {
       mLocationManager.requestLocationUpdates(
           LocationManager.NETWORK_PROVIDER,
           LOCATION_RATE_NETWORK_MS,
           0.0f /* minDistance */,
           mLocationListener);
+
       mLocationManager.requestLocationUpdates(
           LocationManager.GPS_PROVIDER,
           LOCATION_RATE_GPS_MS,

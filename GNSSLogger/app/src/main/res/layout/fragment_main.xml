@@ -10,6 +10,34 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
+  <!--기기의 이름이 어떤건지 정의합니다.-->
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/device_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:singleLine="true"
+        android:visibility="visible"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Button"
+        android:layout_weight="0.5"
+        android:visibility="visible"
+        android:onClick="DeviceIdChange"
+        android:id="@+id/device_name_button"/>
+
+  </LinearLayout>
+
+
   <LinearLayout
       android:orientation="horizontal"
       android:layout_width="match_parent"
@@ -210,6 +238,9 @@
           android:text="@string/app_version"
           android:textStyle="italic|bold" />
     </LinearLayout>
+
+
+
   </RelativeLayout>
 
 

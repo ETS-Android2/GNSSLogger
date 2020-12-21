@@ -29,6 +29,8 @@
     <string name="requestSingleNlp">Get Network Loc.</string>
     <string name="requestSingleGps">Get GPS Loc.</string>
     <string name="ttff">TTFF</string>
+    <string name="Device_Name">Device_Name</string>
+    <string name="Button">Change</string>
 
     <string name="timer_service_name">GNSS Logger timer</string>
     <string name="timer_title">Timer Settings</string>

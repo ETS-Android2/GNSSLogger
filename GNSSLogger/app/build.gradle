@@ -42,5 +42,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:11.0.2'
     api project(':pseudorange')
     implementation files('libs/achartengine-1.2.0.jar')
+    compile 'com.google.android.gms:play-services-maps:10.2.0'
+
+    //추가했습니다.
+   /*implementation fileTree(dir: 'libs', include: ['*.jar'])
+   implementation 'com.android.support:appcompat-v7:26.1.0'
+   implementation  'org.apache.httpcomponents:httpclient:4.5'*/
 }
+
 
