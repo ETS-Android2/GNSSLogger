@@ -87,6 +87,7 @@ public class AgnssUiLogger implements GnssListener {
   @Override
   public void onNmeaReceived(long timestamp, String s) {}
 
+  //여기서 먼저 시작합니다
   @Override
   public void onListenerRegistration(String listener, boolean result) {
     logEvent("Registration", String.format("add%sListener: %b", listener, result), USED_COLOR);

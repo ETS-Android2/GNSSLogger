@@ -90,6 +90,7 @@ public class FileLogger implements GnssListener {
     { //multi-thread로 동시접근되는것을 막는다
       File baseDirectory;
       String state = Environment.getExternalStorageState(); //상태
+      Object dfsf= Environment.getExternalStorageDirectory();
       if (Environment.MEDIA_MOUNTED.equals(state))
       {
         baseDirectory = new File(Environment.getExternalStorageDirectory(), FILE_PREFIX);

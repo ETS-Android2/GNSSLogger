@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity
     implements OnConnectionFailedListener, ConnectionCallbacks, GroundTruthModeSwitcher {
   private static final int LOCATION_REQUEST_ID = 1;
   private static final String[] REQUIRED_PERMISSIONS = {
+
     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE
   };
   private static final int NUMBER_OF_FRAGMENTS = 7; //숫자 수정

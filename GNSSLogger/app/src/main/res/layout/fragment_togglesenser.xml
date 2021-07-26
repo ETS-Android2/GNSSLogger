@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/togglesenser"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9" />
+<!--    <com.google.android.gms.maps.MapView-->
+<!--        android:id="@+id/togglesenser"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="9" />-->
 
     <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp"
@@ -23,6 +23,7 @@
             android:id="@+id/Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -475,4 +476,31 @@
                 android:textSize="17sp"/>
         </TableRow>
     </TableLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorBlack">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="START"
+            android:id="@+id/logger_start"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="STOP"
+            android:id="@+id/logger_stop"/>
+
+    </LinearLayout>
+
+
+
 </LinearLayout>

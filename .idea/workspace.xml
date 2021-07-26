@@ -5,8 +5,38 @@
       <config />
     </shared>
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a101eac-ee38-406c-a999-3ceee180ce14" name="Default Changelist" comment="" />
+    <list default="true" id="3a101eac-ee38-406c-a999-3ceee180ce14" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GNSSLogger/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GNSSLogger/.idea/caches/build_file_checksums.ser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GNSSLogger/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GNSSLogger/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GNSSLogger/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,14 +54,22 @@
       </state>
     </system>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1efgZz5vqgJrsQ50aIiEhkLNbS4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/GNSSLogger" />
     <property name="project.structure.last.edited" value="Project" />
@@ -52,26 +90,25 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="734" y="355" width="1092" height="692" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602824207285">
+    <state x="1060" y="455" key="FileChooserDialogImpl" timestamp="1618539140493">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="734" y="355" width="1092" height="692" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1200.0.1200.1880/0.0.2560.1400/2560.0.1920.1160@0.0.2560.1400" timestamp="1602824207285" />
-    <state x="1060" y="441" key="FileChooserDialogImpl" timestamp="1602824219067">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1060" y="441" key="FileChooserDialogImpl/-1200.0.1200.1880/0.0.2560.1400/2560.0.1920.1160@0.0.2560.1400" timestamp="1602824219067" />
-    <state x="760" y="274" key="SettingsEditor" timestamp="1594718215805">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="760" y="274" key="SettingsEditor/-1200.0.1200.1880/0.0.2560.1400/2560.0.1920.1160@0.0.2560.1400" timestamp="1594718215805" />
-    <state x="2552" y="-8" width="1394" height="1247" maximized="true" key="dock-window-1" timestamp="1602824056315">
-      <screen x="2560" y="0" width="1920" height="1160" />
-    </state>
-    <state x="2552" y="-8" width="1394" height="1247" maximized="true" key="dock-window-1/-1200.0.1200.1880/0.0.2560.1400/2560.0.1920.1160@0.0.2560.1400" timestamp="1602824056315" />
-    <state x="973" y="431" width="613" height="538" key="find.popup" timestamp="1602823937029">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="973" y="431" width="613" height="538" key="find.popup/-1200.0.1200.1880/0.0.2560.1400/2560.0.1920.1160@0.0.2560.1400" timestamp="1602823937029" />
+    <state x="1060" y="455" key="FileChooserDialogImpl/-1200.0.1200.1880/0.0.2560.1400/2560.0.1920.1160@0.0.2560.1400" timestamp="1618539140493" />
   </component>
 </project>

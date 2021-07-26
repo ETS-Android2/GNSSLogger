@@ -90,7 +90,9 @@ public class UiLogger implements GnssListener {
     builder.append("\n");
 
     for (GnssMeasurement measurement : event.getMeasurements()) {
+
       builder.append(toStringMeasurement(measurement));
+
       builder.append("\n");
     }
 

@@ -113,6 +113,7 @@ public class GnssContainer {
         }
       };
 
+  // 여기가 시작점입니다
   private final GnssMeasurementsEvent.Callback gnssMeasurementsEventListener =
       new GnssMeasurementsEvent.Callback() {
         @Override
