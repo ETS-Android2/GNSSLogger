@@ -17,8 +17,8 @@ import java.util.Date;
 
 //public class SampleTask extends AsyncTask<Void, Void, String> {
 public class SampleTask extends AsyncTask<String, Void, String> {
-    protected String doInBackground(String...params) {
 
+    protected String doInBackground(String...params) {
         String result = null;
 
         try {

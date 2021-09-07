@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -53,6 +54,7 @@ public class FileLogger implements GnssListener {
 
   private static final String TAG = "FileLogger";
   private static final String FILE_PREFIX = "gnss_log";
+  private static final String MEASUREMENT_LOG= "measurement_log";
   private static final String ERROR_WRITING_FILE = "Problem writing to file.";
   private static final String COMMENT_START = "# ";
   private static final char RECORD_DELIMITER = ',';
@@ -81,6 +83,8 @@ public class FileLogger implements GnssListener {
     this.mContext = context;
   }
 
+
+  public String measurementUrl="";
   /**
    * Start a new file logging process.
    */
@@ -90,7 +94,6 @@ public class FileLogger implements GnssListener {
     { //multi-thread로 동시접근되는것을 막는다
       File baseDirectory;
       String state = Environment.getExternalStorageState(); //상태
-      Object dfsf= Environment.getExternalStorageDirectory();
       if (Environment.MEDIA_MOUNTED.equals(state))
       {
         baseDirectory = new File(Environment.getExternalStorageDirectory(), FILE_PREFIX);
@@ -208,6 +211,96 @@ public class FileLogger implements GnssListener {
     }
   }
 
+  public void SetMeasurmentUrl(String url){
+    measurementUrl = url;
+  }
+
+  public void startMeasurementLog()
+  {
+    synchronized (mFileLock)
+    {
+      //multi-thread로 동시접근되는것을 막는다
+      File baseDirectory;
+      String state = Environment.getExternalStorageState(); //상태
+      if (Environment.MEDIA_MOUNTED.equals(state))
+      {
+        baseDirectory = new File(Environment.getExternalStorageDirectory(), FILE_PREFIX);
+        baseDirectory.mkdirs(); //파일을 생성합니다.
+      }
+      else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+      {
+        logError("Cannot write to external storage.");
+        return;
+      } else {
+        logError("Cannot read external storage.");
+        return;
+      }
+
+      SimpleDateFormat formatter = new SimpleDateFormat("yyy_MM_dd_HH_mm_ss");
+      Date now = new Date();
+      String fileName = String.format("%s_%s.txt", MEASUREMENT_LOG, formatter.format(now));
+      File currentFile = new File(baseDirectory, fileName);
+      String currentFilePath = currentFile.getAbsolutePath();
+      BufferedWriter currentFileWriter;
+      try
+      {
+        currentFileWriter = new BufferedWriter(new FileWriter(currentFile));
+      } catch (IOException e)
+      {
+        logException("Could not open file: " + currentFilePath, e);
+        return;
+      }
+
+      try {
+
+        currentFileWriter.write(
+                "ElapsedRealtimeMillis,TimeNanos,LeapSecond,TimeUncertaintyNanos,FullBiasNanos,"
+                        + "BiasNanos,BiasUncertaintyNanos,DriftNanosPerSecond,DriftUncertaintyNanosPerSecond,"
+                        + "HardwareClockDiscontinuityCount,Svid,TimeOffsetNanos,State,ReceivedSvTimeNanos,"
+                        + "ReceivedSvTimeUncertaintyNanos,Cn0DbHz,PseudorangeRateMetersPerSecond,"
+                        + "PseudorangeRateUncertaintyMetersPerSecond,"
+                        + "AccumulatedDeltaRangeState,AccumulatedDeltaRangeMeters,"
+                        + "AccumulatedDeltaRangeUncertaintyMeters,CarrierFrequencyHz,CarrierCycles,"
+                        + "CarrierPhase,CarrierPhaseUncertainty,MultipathIndicator,SnrInDb,"
+                        + "ConstellationType,AgcDb,CarrierFrequencyHz");
+        currentFileWriter.newLine();
+
+      } catch (IOException e) {
+        logException("Count not initialize file: " + currentFilePath, e);
+        return;
+      }
+
+      if (mFileWriter != null) {
+        try {
+          mFileWriter.close();
+        } catch (IOException e) {
+          logException("Unable to close all file streams.", e);
+          return;
+        }
+      }
+
+      mFile = currentFile;
+      mFileWriter = currentFileWriter;
+      Toast.makeText(mContext, "File opened: " + currentFilePath, Toast.LENGTH_SHORT).show();
+
+      // To make sure that files do not fill up the external storage:
+      // - Remove all empty files
+      FileFilter filter = new FileToDeleteFilter(mFile);
+      for (File existingFile : baseDirectory.listFiles(filter)) {
+        existingFile.delete();
+      }
+      // - Trim the number of files with data
+      File[] existingFiles = baseDirectory.listFiles();
+      int filesToDeleteCount = existingFiles.length - MAX_FILES_STORED;
+      if (filesToDeleteCount > 0) {
+        Arrays.sort(existingFiles);
+        for (int i = 0; i < filesToDeleteCount; ++i) {
+          existingFiles[i].delete();
+        }
+      }
+    }
+  }
+
   /**
    * Send the current log via email or other options selected from a pop menu shown to the user. A
    * new log is started when calling this function.
@@ -281,10 +374,13 @@ public class FileLogger implements GnssListener {
       if (mFileWriter == null) {
         return;
       }
+
       GnssClock gnssClock = event.getClock();
       for (GnssMeasurement measurement : event.getMeasurements()) {
         try {
+
           writeGnssMeasurementToFile(gnssClock, measurement);
+
         } catch (IOException e) {
           logException(ERROR_WRITING_FILE, e);
         }
@@ -356,11 +452,13 @@ public class FileLogger implements GnssListener {
   @Override
   public void onTTFFReceived(long l) {}
 
+
   private void writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
       throws IOException {
     String clockStream =
+
         String.format(
-            "Raw,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
             SystemClock.elapsedRealtime(),
             clock.getTimeNanos(),
             clock.hasLeapSecond() ? clock.getLeapSecond() : "",
@@ -373,6 +471,9 @@ public class FileLogger implements GnssListener {
                 ? clock.getDriftUncertaintyNanosPerSecond()
                 : "",
             clock.getHardwareClockDiscontinuityCount() + ",");
+
+
+
     mFileWriter.write(clockStream);
 
     String measurementStream =
@@ -403,9 +504,33 @@ public class FileLogger implements GnssListener {
                 ? measurement.getAutomaticGainControlLevelDb()
                 : "",
             measurement.hasCarrierFrequencyHz() ? measurement.getCarrierFrequencyHz() : "");
+
+    SendServerData(clockStream+measurementStream);
     mFileWriter.write(measurementStream);
     mFileWriter.newLine();
   }
+
+  //지정한 서버로 데이터를 보냅니다
+  private void SendServerData(final String value)
+  {
+    //특별히 UI 변경이 필요하진않습니다
+    new Thread(new Runnable() {
+      public void run() {
+        try {
+
+          SendServerTask send = new SendServerTask(measurementUrl,value, null);
+          send.execute();
+
+        }catch (Exception e)
+        {
+          System.out.println("================LINEEE==========" + e.getMessage());
+        }
+      }
+    }).start();
+
+  }
+
+
 
   private void logException(String errorMessage, Exception e)
   {

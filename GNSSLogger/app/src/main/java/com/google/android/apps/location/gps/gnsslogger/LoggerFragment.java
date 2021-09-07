@@ -91,6 +91,7 @@ public class LoggerFragment extends Fragment implements TimerListener {
     private FileLogger mFileLogger;
     private UiLogger mUiLogger;
     private Button mStartLog;
+    private Button mMeasurebt;
     private Button mTimer;
     private Button mSendFile;
     private TextView mTimerDisplay;
@@ -215,6 +216,7 @@ public class LoggerFragment extends Fragment implements TimerListener {
         mTimer = (Button) newView.findViewById(R.id.timer);
         mStartLog = (Button) newView.findViewById(R.id.start_logs); //시작버튼
         mSendFile = (Button) newView.findViewById(R.id.send_file);
+        mMeasurebt =(Button) newView.findViewById(R.id.measurement_log);
 
         displayTimer(mTimerValues, false /* countdownStyle */);
         enableOptions(true /* start */);//버튼 활성화, 비활성화
@@ -235,6 +237,30 @@ public class LoggerFragment extends Fragment implements TimerListener {
                         }
                     }
                 });
+
+
+        mMeasurebt.setOnClickListener( //시작버튼을 클릭했을경우
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        enableOptions(false /* start */);
+                        //버튼 활성화, 비활성화
+
+                        Toast.makeText(getContext(),"Measurement Button start", Toast.LENGTH_LONG).show(); //화면에 글자 표출
+
+                        String value= SettingsFragment.MeasurementURLText.getText().toString();
+
+                        mFileLogger.SetMeasurmentUrl(value);
+                        mFileLogger.startMeasurementLog();
+
+                        if (!mTimerValues.isZero() && (mTimerService != null)) {
+                            mTimerService.startTimer();
+                        }
+                    }
+                });
+
+
 
         mSendFile.setOnClickListener(
                 new OnClickListener() {
@@ -297,6 +323,7 @@ public class LoggerFragment extends Fragment implements TimerListener {
     private void enableOptions(boolean start) {
         mTimer.setEnabled(start); //타이머
         mStartLog.setEnabled(start); //로그적기
+        mMeasurebt.setEnabled(start);
         mSendFile.setEnabled(!start); //true
     }
 
@@ -308,7 +335,8 @@ public class LoggerFragment extends Fragment implements TimerListener {
         private static final int MAX_LENGTH = 42000;
         private static final int LOWER_THRESHOLD = (int) (MAX_LENGTH * 0.5);
 
-        public synchronized void logTextFragment(final String tag, final String text, int color) {
+        public synchronized void logTextFragment(final String tag, final String text, int color)
+        {
             final SpannableStringBuilder builder = new SpannableStringBuilder();
             builder.append(tag).append(" | ").append(text).append("\n");
             builder.setSpan(
@@ -327,6 +355,7 @@ public class LoggerFragment extends Fragment implements TimerListener {
                         public void run() {
                             mLogView.append(builder);
                             SendJsonDataToServer(tag,builder.toString());
+
                             SharedPreferences sharedPreferences = PreferenceManager.
                                     getDefaultSharedPreferences(getActivity());
                             Editable editable = mLogView.getEditableText();
@@ -348,6 +377,11 @@ public class LoggerFragment extends Fragment implements TimerListener {
         }
 
         private void SendJsonDataToServer(final String Tag ,final String value) {
+
+            //이벤트 발생후에 서버로 보내는건 여기가 맞습니다
+
+
+            int i=0;
 //                    new Thread(new Runnable() {
 //                        @Override
 //                      public void run() {
@@ -365,11 +399,18 @@ public class LoggerFragment extends Fragment implements TimerListener {
 //                            });
 //                         }
 //                     }).start();
+
+
+
+
+
+
+
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        SampleTask st = new SampleTask();
-                        st.execute(Tag,value);
+                      //  SampleTask st = new SampleTask();
+                       // st.execute(Tag,value);
 
                     }catch (Exception e)
                     {
@@ -377,6 +418,9 @@ public class LoggerFragment extends Fragment implements TimerListener {
                     }
                 }
             }).start();
+
+
+
 
            /* if (true)
                 return;*/

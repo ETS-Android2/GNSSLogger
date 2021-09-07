@@ -60,26 +60,34 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/timer"
             android:text="Timer"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
         <Button
             android:id="@+id/start_logs"
             android:text="Start Log"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
         <Button
             android:id="@+id/send_file"
-            android:text="Stop &amp; Send"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Stop &amp; Send" />
+
+        <Button
+            android:id="@+id/measurement_log"
+            android:text="measurement_log"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

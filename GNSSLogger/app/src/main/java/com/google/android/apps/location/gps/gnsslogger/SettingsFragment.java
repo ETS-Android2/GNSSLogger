@@ -51,7 +51,9 @@ public class SettingsFragment extends Fragment {
 
     public Button changeButton;
     public EditText changeText;
+    public static EditText MeasurementURLText;
 
+    //public static String meaurl="";
   public static final String TAG = ":SettingsFragment";
 
   /** Position in the drop down menu of the auto ground truth mode */
@@ -100,7 +102,8 @@ public class SettingsFragment extends Fragment {
       changeButton = (Button) view.findViewById(R.id.device_name_button);
       changeText = (EditText)view.findViewById(R.id.device_name_id);
       changeText.setHint("Device_Name(" +Build.MODEL+")");
-
+      MeasurementURLText =(EditText)view.findViewById(R.id.measurment_urlText);
+    //  meaurl = MeasurementURLText.getText().toString();
 
       final Switch registerLocation = (Switch) view.findViewById(R.id.register_location); //location 버튼
     final TextView registerLocationLabel =
@@ -123,6 +126,10 @@ public class SettingsFragment extends Fragment {
                   }
           }
         });
+
+
+
+
 
     final Switch registerMeasurements = (Switch) view.findViewById(R.id.register_measurements);
     final TextView registerMeasurementsLabel =

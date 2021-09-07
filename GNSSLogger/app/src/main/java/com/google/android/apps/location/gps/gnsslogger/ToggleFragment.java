@@ -150,6 +150,7 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
         txtGPSPositionX = (TextView) rootView.findViewById(R.id.GPS_PositionX);
         txtGPSPositionY = (TextView) rootView.findViewById(R.id.GPS_PositionY);
         txtGPSPositionZ = (TextView) rootView.findViewById(R.id.GPS_PositionZ);
+
         txtOrientationX = (TextView) rootView.findViewById(R.id.OrientationX);
         txtOrientationY = (TextView) rootView.findViewById(R.id.OrientationY);
         txtOrientationZ = (TextView) rootView.findViewById(R.id.OrientationZ);
@@ -346,6 +347,10 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
             GPS_Position_y = location.getLatitude();
             GPS_Position_z = location.getAltitude();
 
+            String dfsf= Double.toString( GPS_Position_x);
+
+
+
             txtGPSPositionX.setText(String.format("%.3f", GPS_Position_x));
             txtGPSPositionY.setText(String.format("%.3f", GPS_Position_y));
             txtGPSPositionZ.setText(String.format("%.3f", GPS_Position_z));
@@ -479,16 +484,28 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
                     Date time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").parse(originalString);
                     String newString = new SimpleDateFormat("HH:mm:ss.SS").format(time); // 9:00
 
+//                    String context ="Timestamp,"+"Accelerometer.x,Accelerometer.y,Accelerometer.z," +
+//                            "Gyroscope.x,Gyroscope.y,Gyroscope.z," +
+//                            "Magnetic_Field.x,Magnetic_Field.y,Magnetic_Field.z," +
+//                            "GPS_Position.x,GPS_Position.y,GPS_Position.z," +
+//                            "Orientation.x,Orientation.y,Orientation.z," +
+//                            "Linear_Accel.x,Linear_Accel.y,Linear_Accel.z," +
+//                            "Gravity.x,Gravity.y,Gravity.z," +
+//                            "Rotation_Vect.x,Rotation_Vect.y,Rotation_Vect.z," +
+//                            "Pressure"+"\n";
+
                     //IMU Log용
                     String context= newString+","+ Float.toString(Accelerometer_x)+","+Float.toString(Accelerometer_y)+","+ Float.toString(Accelerometer_z)+","+
-                    Float.toString(Gyroscope_x)+","+Float.toString( Gyroscope_y)+","+Float.toString( Gyroscope_z)+","+
-                    Float.toString(Magnetic_Field_x)+","+ Float.toString(Magnetic_Field_y)+","+Float.toString( Magnetic_Field_z)+","+
-                    Float.toString( Orientation_x)+","+ Float.toString(Orientation_y)+","+Float.toString( Orientation_z)+","+
-                    Float.toString( Linear_Accel_x)+","+Float.toString( Linear_Accel_y)+","+Float.toString( Linear_Accel_z)+","+
-                    Float.toString(Gravity_x)+","+Float.toString( Gravity_y)+","+Float.toString( Gravity_z)+","+
-                    Float.toString(Rotation_Vect_x)+","+Float.toString( Rotation_Vect_y)+","+ Float.toString(Rotation_Vect_z)+","+
-                    Double.toString( GPS_Position_x)+","+Double.toString( GPS_Position_y)+","+ Double.toString(GPS_Position_z)+","+
-                    Float.toString(Pressure)+"\n";
+                            Float.toString(Gyroscope_x)+","+Float.toString( Gyroscope_y)+","+Float.toString( Gyroscope_z)+","+
+                            Float.toString(Magnetic_Field_x)+","+ Float.toString(Magnetic_Field_y)+","+Float.toString( Magnetic_Field_z)+","+
+                            Double.toString(GPS_Position_x)+","+Double.toString( GPS_Position_y)+","+ Double.toString(GPS_Position_z)+","+
+                            Float.toString( Orientation_x)+","+ Float.toString(Orientation_y)+","+Float.toString( Orientation_z)+","+
+                            Float.toString( Linear_Accel_x)+","+Float.toString( Linear_Accel_y)+","+Float.toString( Linear_Accel_z)+","+
+                            Float.toString(Gravity_x)+","+Float.toString( Gravity_y)+","+Float.toString( Gravity_z)+","+
+                            Float.toString(Rotation_Vect_x)+","+Float.toString( Rotation_Vect_y)+","+ Float.toString(Rotation_Vect_z)+","+
+                            Float.toString(Pressure)+"\n";
+
+
 
 
                     writer.write(context); //들어갈 내용

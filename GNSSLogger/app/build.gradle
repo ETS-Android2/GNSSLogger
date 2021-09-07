@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        jcenter() // or mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+    }
+}
+
+
 apply plugin: 'com.android.application'
 
 android {
@@ -25,8 +36,12 @@ android {
     }
     dexOptions {
         preDexLibraries = false
-        javaMaxHeapSize "4g" // 2g should be also OK
+        javaMaxHeapSize "4g" // 2g should be also OKf
     }
+
+
+
+
 }
 
 dependencies {
