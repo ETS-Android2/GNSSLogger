@@ -16,8 +16,12 @@
 
 package com.google.android.apps.location.gps.gnsslogger;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.GnssClock;
 import android.location.GnssMeasurement;
 import android.location.GnssMeasurementsEvent;
@@ -31,6 +35,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.BuildConfig;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
@@ -83,6 +88,9 @@ public class FileLogger implements GnssListener {
     this.mContext = context;
   }
 
+  private NotificationManager manager;
+  private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
+  private static final int NOTIFICATION_ID = 0;
 
   public String measurementUrl="";
   /**
@@ -90,6 +98,8 @@ public class FileLogger implements GnssListener {
    */
   public void startNewLog()
   {
+
+
     synchronized (mFileLock)
     { //multi-thread로 동시접근되는것을 막는다
       File baseDirectory;
@@ -510,14 +520,50 @@ public class FileLogger implements GnssListener {
     mFileWriter.newLine();
   }
 
+  public void ShowTitleBar(){
+
+    manager= (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationCompat.Builder builder  = null;
+
+    if(android.os.Build.VERSION.SDK_INT
+            >= android.os.Build.VERSION_CODES.O) //버전을 확인합니다
+    {
+      String ChannelID ="channel_01";
+      String ChannelName = "Channel_01_Name";
+
+      NotificationChannel channel =new NotificationChannel(ChannelID,ChannelName,NotificationManager.IMPORTANCE_DEFAULT);
+      manager.createNotificationChannel(channel);
+
+      builder = new NotificationCompat.Builder(mContext, ChannelID);
+
+    }
+    else{
+      builder = new NotificationCompat.Builder(mContext, null);
+    }
+
+    builder.setSmallIcon(R.drawable.ic_baseline_sentiment_very_satisfied_24);
+    builder.setContentTitle("타이틀?");
+    builder.setContentText("이건내용이라고합니다");
+    builder.setAutoCancel(false); //자동삭제
+
+    builder.setOngoing(true); //슬라이드 삭제 방지
+
+    Notification notification=builder.build();
+
+    manager.notify(1,notification);
+
+  }
+
   //지정한 서버로 데이터를 보냅니다
   private void SendServerData(final String value)
   {
+    ShowTitleBar();
+
+
     //특별히 UI 변경이 필요하진않습니다
     new Thread(new Runnable() {
       public void run() {
         try {
-
           SendServerTask send = new SendServerTask(measurementUrl,value, null);
           send.execute();
 
@@ -527,10 +573,7 @@ public class FileLogger implements GnssListener {
         }
       }
     }).start();
-
   }
-
-
 
   private void logException(String errorMessage, Exception e)
   {

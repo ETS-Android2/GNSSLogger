@@ -1,5 +1,6 @@
 package com.google.android.apps.location.gps.gnsslogger;
 
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Debug;
@@ -37,9 +38,14 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             Urlstring = measurementUrl+ "Raw,"+url;
         }
 
-        System.out.println("결과값" + url);
+        //System.out.println("결과값" + url);
         URL url = null;
         try {
+
+
+
+
+
             url = new URL(Urlstring);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -64,6 +70,8 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
 
         return null;
+
+
     }
 
     protected void onPostExecute(String result) {
