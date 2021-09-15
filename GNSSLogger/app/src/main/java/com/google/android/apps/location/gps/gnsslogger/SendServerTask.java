@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Debug;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -21,6 +22,11 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     private String measurementUrl;
     private String url;
     private ContentValues value;
+
+    public SendServerTask(){
+
+
+    }
 
     public SendServerTask(String measureUrl, String Dataurl, ContentValues value) {
         this.measurementUrl = measureUrl;
@@ -42,10 +48,6 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
         URL url = null;
         try {
 
-
-
-
-
             url = new URL(Urlstring);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -61,10 +63,10 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             in.close();
 
         } catch (MalformedURLException e) {
-            System.out.println("================데이터 진행 불가==========");
+         //   System.out.println("================데이터 진행 불가==========");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("=================데이터 진행 불가=========");
+           // System.out.println("=================데이터 진행 불가=========");
             e.printStackTrace();
         }
 
@@ -79,6 +81,11 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
         //System.out.println("결과값" + result);
 
         //result 값을 파싱하여 원하는 작업을 한다
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
     }
 }
 

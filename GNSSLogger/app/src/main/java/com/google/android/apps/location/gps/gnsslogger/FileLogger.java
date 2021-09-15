@@ -89,10 +89,11 @@ public class FileLogger implements GnssListener {
   }
 
   private NotificationManager manager;
-  private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
-  private static final int NOTIFICATION_ID = 0;
 
   public String measurementUrl="";
+ // public boolean issendMeasureData = false;
+//  private Thread thread = null;
+  private SendServerTask send = null;
   /**
    * Start a new file logging process.
    */
@@ -329,11 +330,20 @@ public class FileLogger implements GnssListener {
         FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", mFile);
     emailIntent.putExtra(Intent.EXTRA_STREAM, fileURI);
     getUiComponent().startActivity(Intent.createChooser(emailIntent, "Send log.."));
+  //  issendMeasureData = false;
     if (mFileWriter != null) {
       try {
         mFileWriter.flush();
         mFileWriter.close();
         mFileWriter = null;
+        if(send!=null)
+        {
+          SendDatatoServer(false,"");
+
+        }
+        //thread.interrupt(); //Measurement를 서버로 보내는걸 중단합니다
+
+
       } catch (IOException e) {
         logException("Unable to close all file streams.", e);
         return;
@@ -384,7 +394,6 @@ public class FileLogger implements GnssListener {
       if (mFileWriter == null) {
         return;
       }
-
       GnssClock gnssClock = event.getClock();
       for (GnssMeasurement measurement : event.getMeasurements()) {
         try {
@@ -516,6 +525,7 @@ public class FileLogger implements GnssListener {
             measurement.hasCarrierFrequencyHz() ? measurement.getCarrierFrequencyHz() : "");
 
     SendServerData(clockStream+measurementStream);
+
     mFileWriter.write(measurementStream);
     mFileWriter.newLine();
   }
@@ -542,8 +552,8 @@ public class FileLogger implements GnssListener {
     }
 
     builder.setSmallIcon(R.drawable.ic_baseline_sentiment_very_satisfied_24);
-    builder.setContentTitle("타이틀?");
-    builder.setContentText("이건내용이라고합니다");
+    builder.setContentTitle("Measurement 메세지");
+    builder.setContentText("서버로 데이터를 보내고있습니다");
     builder.setAutoCancel(false); //자동삭제
 
     builder.setOngoing(true); //슬라이드 삭제 방지
@@ -557,23 +567,27 @@ public class FileLogger implements GnssListener {
   //지정한 서버로 데이터를 보냅니다
   private void SendServerData(final String value)
   {
-    ShowTitleBar();
-
-
-    //특별히 UI 변경이 필요하진않습니다
-    new Thread(new Runnable() {
-      public void run() {
-        try {
-          SendServerTask send = new SendServerTask(measurementUrl,value, null);
-          send.execute();
-
-        }catch (Exception e)
-        {
-          System.out.println("================LINEEE==========" + e.getMessage());
-        }
-      }
-    }).start();
+    SendDatatoServer(true, value);
   }
+
+  public void SendDatatoServer(boolean isRun,String value){
+
+    if(isRun){
+      if(value!="")
+      {
+        ShowTitleBar();
+
+        send = new SendServerTask(measurementUrl,value, null);
+        send.execute();
+      }
+
+    }
+    else{
+      send.cancel(true);
+      manager.cancel(1);
+    }
+  }
+
 
   private void logException(String errorMessage, Exception e)
   {

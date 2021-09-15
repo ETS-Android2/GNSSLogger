@@ -154,7 +154,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         mGnssContainer.unregisterAll();
+        //어플리케이션이 종료될경우
+
+        //상단에 있는 상태바 지우기
+
+       // LoggerFragment log = (LoggerFragment) mFragments[FRAGMENT_INDEX_LOGGER];
+        mFileLogger.SendDatatoServer(false,"");
+        //log.setFileLogger();
         super.onDestroy();
+
     }
 
     @Override
@@ -169,57 +177,7 @@ public class MainActivity extends AppCompatActivity
         buildGoogleApiClient();
         requestPermissionAndSetupFragments(this);
         context = this;
-
-
-     //   createNotificationChannel();
-
-
- /*   if (savedInstanceState == null) {
-      MainFragment mainFragment = new MainFragment();
-      getSupportFragmentManager().beginTransaction()
-              .replace(R.id.mainFragment, mainFragment, "main")
-              .commit();
-    } */
     }
-//    public void createNotificationChannel(){
-//
-//        manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-//        // manager = (NotificationManager)mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        if(android.os.Build.VERSION.SDK_INT
-//                >= android.os.Build.VERSION_CODES.O) //버전을 확인합니다
-//        {
-//            //Toast.makeText(mContext,"지금테스트중이야",Toast.LENGTH_SHORT).show();
-//            NotificationChannel channel = new NotificationChannel(PRIMARY_CHANNEL_ID,"test Notification",manager.IMPORTANCE_HIGH);
-//            channel.enableLights(true);
-//            channel.setLightColor(Color.RED);
-//            channel.enableVibration(true);
-//            channel.setDescription("이거근데뭐야?");
-//
-//            manager.createNotificationChannel(channel);
-//
-//        }
-//    }
-
-//    private NotificationCompat.Builder getNotificationBuilder(){
-//
-//        NotificationCompat.Builder builder= new NotificationCompat.Builder(this);
-//        builder.setSmallIcon(R.drawable.ic_baseline_sentiment_very_satisfied_24);
-//        builder.setColor(Color.RED);
-//        builder.setContentTitle("지금은 테스트중입니다");
-//        builder.setContentText("테스트중이라니깐요");
-//
-//        return builder;
-//    }
-
-//    private void sendNotification()
-//    {
-//        NotificationCompat.Builder builder= getNotificationBuilder();
-//        manager.notify(NOTIFICATION_ID,builder.build());
-//    }
-//
-
-
 
     protected PendingIntent createActivityDetectionPendingIntent() {
         Intent intent = new Intent(this, DetectedActivitiesIntentReceiver.class);
