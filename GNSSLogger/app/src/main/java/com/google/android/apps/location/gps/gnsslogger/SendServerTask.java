@@ -1,18 +1,12 @@
 package com.google.android.apps.location.gps.gnsslogger;
 
-import android.app.NotificationManager;
 import android.content.ContentValues;
+import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Debug;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,6 +16,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     private String measurementUrl;
     private String url;
     private ContentValues value;
+    private UiLogger uiLogger= null;
 
     public SendServerTask(){
 
@@ -35,11 +30,15 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
     }
 
+    public void setUILogger(UiLogger ui){
+        uiLogger =ui;
+    }
+
     @Override
     protected String doInBackground(String... strings) {
 
         String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmart/" + "Raw,"+url;
-        if(measurementUrl!="")
+        if(measurementUrl!=null)
         {
             Urlstring = measurementUrl+ "Raw,"+url;
         }
@@ -61,6 +60,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
             conn.disconnect();
             in.close();
+            return result;
 
         } catch (MalformedURLException e) {
          //   System.out.println("================데이터 진행 불가==========");
@@ -76,11 +76,20 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
     }
 
+    //화면에 표출합니다 그림을
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        //System.out.println("결과값" + result);
 
-        //result 값을 파싱하여 원하는 작업을 한다
+        LoggerFragment.UIFragmentComponent component =  uiLogger.getUiFragmentComponent();
+        if (component != null) {
+
+            component.logTextFragment("Result (PNT API):",result, Color.parseColor("#ff0000"));
+            if(result.compareTo("$NULL*1B")!=0)
+            {
+                int i=0;
+            }
+            //component.logTextFragment(tag, text, color);
+        }
     }
 
     @Override

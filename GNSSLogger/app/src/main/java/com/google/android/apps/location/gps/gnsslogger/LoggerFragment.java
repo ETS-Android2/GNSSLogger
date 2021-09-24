@@ -144,6 +144,7 @@ public class LoggerFragment extends Fragment implements TimerListener {
 
     public void setUILogger(UiLogger value) {
         mUiLogger = value;
+
     }
 
     public void setFileLogger(FileLogger value) {
@@ -175,10 +176,12 @@ public class LoggerFragment extends Fragment implements TimerListener {
                 .bindService(
                         new Intent(getActivity(), TimerService.class), mConnection, Context.BIND_AUTO_CREATE);
 
-        UiLogger currentUiLogger = mUiLogger;
+        final UiLogger currentUiLogger = mUiLogger;
+
         if (currentUiLogger != null) {
             currentUiLogger.setUiFragmentComponent(mUiComponent);
         }
+
         FileLogger currentFileLogger = mFileLogger;
         if (currentFileLogger != null) {
             currentFileLogger.setUiComponent(mUiComponent);
@@ -250,9 +253,13 @@ public class LoggerFragment extends Fragment implements TimerListener {
                         Toast.makeText(getContext(),"Measurement Button start", Toast.LENGTH_LONG).show(); //화면에 글자 표출
 
                         String value= SettingsFragment.MeasurementURLText.getText().toString();
+                        if( SettingsFragment.MeasurementURLText.getText().toString().isEmpty()){
+                            value= null;
+                        }
 
-                        mFileLogger.SetMeasurmentUrl(value);
-                        mFileLogger.startMeasurementLog();
+                        mFileLogger.setUILogger(currentUiLogger);
+                        mFileLogger.setMeasurmentUrl(value);
+                        mFileLogger.startMeasurementLog(); //메져먼트 로그를 txt 파일로 뽑거나 서버로 보냅니다
 
                         if (!mTimerValues.isZero() && (mTimerService != null)) {
                             mTimerService.startTimer();
@@ -334,6 +341,8 @@ public class LoggerFragment extends Fragment implements TimerListener {
 
         private static final int MAX_LENGTH = 42000;
         private static final int LOWER_THRESHOLD = (int) (MAX_LENGTH * 0.5);
+
+        //받은 메세지를 화면에 출력합니다
 
         public synchronized void logTextFragment(final String tag, final String text, int color)
         {

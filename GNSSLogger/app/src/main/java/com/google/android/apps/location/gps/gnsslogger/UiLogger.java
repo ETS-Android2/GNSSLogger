@@ -155,7 +155,9 @@ public class UiLogger implements GnssListener {
   }
 
   private String toStringMeasurement(GnssMeasurement measurement) {
+
     final String format = "   %-4s = %s\n";
+
     StringBuilder builder = new StringBuilder("GnssMeasurement:\n");
     DecimalFormat numberFormat = new DecimalFormat("#0.000");
     DecimalFormat numberFormat1 = new DecimalFormat("#0.000E00");

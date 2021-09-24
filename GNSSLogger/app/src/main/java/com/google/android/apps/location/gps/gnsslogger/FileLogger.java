@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A GNSS logger to store information to a file.
@@ -91,6 +92,8 @@ public class FileLogger implements GnssListener {
   private NotificationManager manager;
 
   public String measurementUrl="";
+
+  private UiLogger uiLogger = null;
  // public boolean issendMeasureData = false;
 //  private Thread thread = null;
   private SendServerTask send = null;
@@ -222,7 +225,11 @@ public class FileLogger implements GnssListener {
     }
   }
 
-  public void SetMeasurmentUrl(String url){
+  public void setUILogger(UiLogger ui){
+    uiLogger =ui;
+  }
+
+  public void setMeasurmentUrl(String url){
     measurementUrl = url;
   }
 
@@ -551,9 +558,9 @@ public class FileLogger implements GnssListener {
       builder = new NotificationCompat.Builder(mContext, null);
     }
 
-    builder.setSmallIcon(R.drawable.ic_baseline_sentiment_very_satisfied_24);
-    builder.setContentTitle("Measurement 메세지");
-    builder.setContentText("서버로 데이터를 보내고있습니다");
+    builder.setSmallIcon(R.drawable.ic_icon);
+    builder.setContentTitle("GNSS Measurement");
+    builder.setContentText("PNT API로 요청하고있습니다");
     builder.setAutoCancel(false); //자동삭제
 
     builder.setOngoing(true); //슬라이드 삭제 방지
@@ -578,7 +585,28 @@ public class FileLogger implements GnssListener {
         ShowTitleBar();
 
         send = new SendServerTask(measurementUrl,value, null);
-        send.execute();
+        send.setUILogger(uiLogger);
+        try {
+          String dfsf=  send.execute().get();
+
+
+//          //ui를 씁니다 ....이게뭘까나
+//          UIFragmentComponent component =  uiLogger.getUiFragmentComponent();
+//          if (component != null) {
+//
+//            component.logTextFragment("테그","지금이거 테스트중입니다",Color.parseColor("#ff0000"));
+//            //component.logTextFragment(tag, text, color);
+//
+//          }
+
+
+          int i=9;
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        } catch (ExecutionException e) {
+          e.printStackTrace();
+        }
+
       }
 
     }

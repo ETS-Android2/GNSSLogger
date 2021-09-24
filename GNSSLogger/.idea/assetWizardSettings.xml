@@ -28,8 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_sentiment_very_satisfied_24" />
-                            <entry key="sourceFile" value="C:\Users\ybseong\Documents\GitHub\GNSSLogger\GNSSLogger" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_icon" />
+                            <entry key="sourceFile" value="C:\Users\ybseong\Documents\GitHub\GNSSLogger\GNSSLogger\app\src\main\res\drawable\icon.svg" />
                           </map>
                         </option>
                       </PersistentState>
