@@ -32,6 +32,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.common.collect.MapMaker;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -212,5 +214,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
           }
         });
+  }
+
+  public void AddPoint(LatLng position){
+
+    MarkerOptions mapMaker =   new MarkerOptions()
+            .position(position)
+            .title(getResources().getString(R.string.title_wls))
+            .icon(
+                    BitmapDescriptorFactory.defaultMarker(
+                            BitmapDescriptorFactory.HUE_GREEN));
+
+    mMap.addMarker(mapMaker);
+   // mMap.
+
+    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, ZOOM_LEVEL));
+
+  }
+
+  public void MapRemoveAll(){
+    mMap.clear();
+
   }
 }

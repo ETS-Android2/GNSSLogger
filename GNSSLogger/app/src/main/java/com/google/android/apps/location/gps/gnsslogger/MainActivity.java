@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity
                 RealTimePositionVelocityCalculator.RESIDUAL_MODE_DISABLED, null /* fixedGroundTruth */);
 
         mFileLogger = new FileLogger(getApplicationContext());
+
         mAgnssUiLogger = new AgnssUiLogger();
         mGnssContainer =
                 new GnssContainer(
@@ -343,6 +344,8 @@ public class MainActivity extends AppCompatActivity
         MapFragment mapFragment = new MapFragment();
         mapFragment.setPositionVelocityCalculator(mRealTimePositionVelocityCalculator);
         mFragments[FRAGMENT_INDEX_MAP] = mapFragment;
+        mFileLogger.SetMapFragment(mapFragment);
+
 
         AgnssFragment agnssFragment = new AgnssFragment();
         agnssFragment.setGpsContainer(mGnssContainer);
