@@ -23,6 +23,7 @@ import android.content.SharedPreferences.Editor;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,6 +43,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -103,7 +111,31 @@ public class SettingsFragment extends Fragment {
       changeText = (EditText)view.findViewById(R.id.device_name_id);
       changeText.setHint("Device_Name(" +Build.MODEL+")");
       MeasurementURLText =(EditText)view.findViewById(R.id.measurment_urlText);
-    //  meaurl = MeasurementURLText.getText().toString();
+
+      String filePath= Environment.getExternalStorageDirectory()+"/gnss_log/file_Settings.txt";
+      File settingFile = new File(filePath);
+      if(settingFile.exists()){
+
+          String line;
+          StringBuilder result = new StringBuilder();
+          try {
+              BufferedReader buf = new BufferedReader(new FileReader(filePath));
+              while((line=buf.readLine())!=null){
+                  result.append(line);
+              }
+           //   buf.close();
+
+
+          } catch (FileNotFoundException e) {
+              e.printStackTrace();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+
+          MeasurementURLText.setText(result.toString());
+      }
+
+
 
       final Switch registerLocation = (Switch) view.findViewById(R.id.register_location); //location 버튼
     final TextView registerLocationLabel =

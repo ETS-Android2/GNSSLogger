@@ -112,8 +112,6 @@ public class FileLogger implements GnssListener {
      * Start a new file logging process.
      */
     public void startNewLog() {
-
-
         synchronized (mFileLock) { //multi-thread로 동시접근되는것을 막는다
             File baseDirectory;
             String state = Environment.getExternalStorageState(); //상태

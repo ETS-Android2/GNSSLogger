@@ -105,9 +105,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
   public void onResume() {
     super.onResume();
     mMapView.onResume();
-    if (mMap != null) {
-      mMap.clear();
-    }
+//    if (mMap != null) {
+//      mMap.clear();
+//    }
     mLastLocationMarkerRaw = null;
     mLastLocationMarkerDevice = null;
   }
@@ -226,10 +226,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             BitmapDescriptorFactory.HUE_GREEN));
 
     mMap.addMarker(mapMaker);
-   // mMap.
-
     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, ZOOM_LEVEL));
-
   }
 
   public void MapRemoveAll(){

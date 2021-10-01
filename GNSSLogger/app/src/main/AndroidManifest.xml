@@ -44,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
          <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="android.support.v4.provider"
@@ -56,6 +57,12 @@
         <service android:name="com.google.android.apps.location.gps.gnsslogger.TimerService"
             android:exported="false"
             android:description="@string/timer_service_name" />
+
+<!--        &lt;!&ndash;서비스강제종료시 이벤트 추가&ndash;&gt;-->
+<!--        <service android:name=".UnCatchTaskService"-->
+<!--            android:stopWithTask="false"/>-->
+
+
         <receiver
             android:name="com.google.android.apps.location.gps.gnsslogger.DetectedActivitiesIntentReceiver"
             android:exported="false" />

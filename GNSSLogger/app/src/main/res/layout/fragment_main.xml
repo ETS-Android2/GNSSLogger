@@ -51,7 +51,7 @@
         android:layout_weight="1"
         android:singleLine="true"
         android:visibility="visible"
-        android:hint="http://theprost8004.iptime.org:50080"/>
+        android:hint="http://theprost8004.iptime.org:50080/ObservablesSmart/"/>
 
   </LinearLayout>
 

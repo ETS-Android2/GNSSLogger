@@ -418,8 +418,8 @@ public class LoggerFragment extends Fragment implements TimerListener {
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                      //  SampleTask st = new SampleTask();
-                       // st.execute(Tag,value);
+//                        SampleTask st = new SampleTask();
+//                        st.execute(Tag,value);
 
                     }catch (Exception e)
                     {
