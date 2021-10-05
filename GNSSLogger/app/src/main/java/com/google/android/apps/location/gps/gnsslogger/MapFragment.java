@@ -226,7 +226,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             BitmapDescriptorFactory.HUE_GREEN));
 
     mMap.addMarker(mapMaker);
-    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, ZOOM_LEVEL));
+   // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, ZOOM_LEVEL));
   }
 
   public void MapRemoveAll(){
