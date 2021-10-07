@@ -32,16 +32,21 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     private UiLogger uiLogger = null;
     private MapFragment mapFragment = null;
 
+    private float GPSSpeed = 0.0f;
+    private float GPSBreaing= 0.0f;
+
     public SendServerTask() {
 
 
     }
 
-    public SendServerTask(String measureUrl, String Dataurl, ContentValues value) {
+    public SendServerTask(String measureUrl, String Dataurl, ContentValues value,float speed, float bearing) {
+
         this.measurementUrl = measureUrl;
         this.url = Dataurl;
         this.value = value;
-
+        this.GPSSpeed = speed;
+        this.GPSBreaing = bearing;
     }
 
     public void setUILogger(UiLogger ui) {
@@ -158,7 +163,10 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
                     float Lng = Lng1 + Lng2 / 60;
                     LatLng latLng = new LatLng(Lat, Lng);
-                    mapFragment.AddPoint(latLng);
+
+
+
+                    mapFragment.AddPoint(latLng,GPSSpeed,GPSBreaing);
                 }
                 catch(Exception e){
 

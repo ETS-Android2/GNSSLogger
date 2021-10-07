@@ -250,12 +250,15 @@ public class RealTimePositionVelocityCalculator implements GnssListener {
                 }
                 logLocationEvent("onLocationChanged: " + location);
                 if (!Double.isNaN(posSolution[0])) {
-                  updateMapViewWithPositions(
-                      posSolution[0],
-                      posSolution[1],
-                      location.getLatitude(),
-                      location.getLongitude(),
-                      location.getTime());
+
+                  //이부분은 수정해야합니다
+//                  updateMapViewWithPositions(
+//                      posSolution[0],
+//                      posSolution[1],
+//                      location.getLatitude(),
+//                      location.getLongitude(),
+//                      location.getTime());
+
                 } else {
                   clearMapMarkers();
                 }

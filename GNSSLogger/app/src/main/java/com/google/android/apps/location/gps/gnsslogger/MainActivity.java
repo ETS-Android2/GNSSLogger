@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity
         //상단에 있는 상태바 지우기
 
        // LoggerFragment log = (LoggerFragment) mFragments[FRAGMENT_INDEX_LOGGER];
-        mFileLogger.SendDatatoServer(false,"");
+        mFileLogger.SendDatatoServer(false,"",0.0f, 0.0f);
         //log.setFileLogger();
         super.onDestroy();
 
@@ -342,6 +342,7 @@ public class MainActivity extends AppCompatActivity
         mFragments[FRAGMENT_INDEX_RESULT] = resultFragment;
 
         MapFragment mapFragment = new MapFragment();
+        mapFragment.SetContext(context);
         mapFragment.setPositionVelocityCalculator(mRealTimePositionVelocityCalculator);
         mFragments[FRAGMENT_INDEX_MAP] = mapFragment;
         mFileLogger.SetMapFragment(mapFragment);

@@ -108,6 +108,8 @@ public class FileLogger implements GnssListener {
 //  private Thread thread = null;
     private SendServerTask send = null;
 
+    private float GPSspeed =0.0f ,GPSbearing= 0.0f;
+
     /**
      * Start a new file logging process.
      */
@@ -339,7 +341,7 @@ public class FileLogger implements GnssListener {
                 mFileWriter.close();
                 mFileWriter = null;
                 if (send != null) {
-                    SendDatatoServer(false, "");
+                    SendDatatoServer(false, "",0.0f, 0.0f);
 
                 }
                 //thread.interrupt(); //Measurement를 서버로 보내는걸 중단합니다
@@ -367,6 +369,8 @@ public class FileLogger implements GnssListener {
                 if (mFileWriter == null) {
                     return;
                 }
+
+
                 String locationStream =
                         String.format(
                                 Locale.US,
@@ -378,6 +382,10 @@ public class FileLogger implements GnssListener {
                                 location.getSpeed(),
                                 location.getAccuracy(),
                                 location.getTime());
+
+                GPSspeed= location.getSpeed(); //gps의 속도값
+                GPSbearing = location.getBearing();
+
                 try {
                     mFileWriter.write(locationStream);
                     mFileWriter.newLine();
@@ -450,6 +458,8 @@ public class FileLogger implements GnssListener {
 
     @Override
     public void onGnssNavigationMessageStatusChanged(int status) {
+
+
     }
 
     @Override
@@ -573,16 +583,16 @@ public class FileLogger implements GnssListener {
 
     //지정한 서버로 데이터를 보냅니다
     private void SendServerData(final String value) {
-        SendDatatoServer(true, value);
+        SendDatatoServer(true, value,GPSspeed,GPSbearing);
     }
 
-    public void SendDatatoServer(boolean isRun, String value) {
+    public void SendDatatoServer(boolean isRun, String value, float speed, float bearing) {
 
         if (isRun) {
             if (value != "") {
                 ShowTitleBar();
 
-                send = new SendServerTask(measurementUrl, value, null);
+                send = new SendServerTask(measurementUrl, value, null,speed, bearing);
                 send.setUILogger(uiLogger);
                 send.setMapFragment(mapFragment);
                 send.execute();

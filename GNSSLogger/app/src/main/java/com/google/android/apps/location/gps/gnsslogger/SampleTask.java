@@ -46,6 +46,7 @@ public class SampleTask extends AsyncTask<String, Void, String> {
             conn.setDoInput(true);
 
 
+
          OutputStreamWriter outStream = new OutputStreamWriter(conn.getOutputStream(), "EUC-KR");
          PrintWriter writer = new PrintWriter(outStream);
          writer.write(jsonObject.toString());
