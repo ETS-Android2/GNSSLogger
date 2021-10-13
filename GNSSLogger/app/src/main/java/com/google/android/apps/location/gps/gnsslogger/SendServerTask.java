@@ -116,7 +116,8 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
 
             }
-            Urlstring = "http://" + measurementUrl + "/ObservablesSmart/" + "Raw," + url;
+          //  Urlstring = "http://" + measurementUrl + "/ObservablesSmartMulti/" + "Raw," + url;
+            Urlstring = "http://" + measurementUrl + "/ObservablesSmartMulti";
         }
 
 

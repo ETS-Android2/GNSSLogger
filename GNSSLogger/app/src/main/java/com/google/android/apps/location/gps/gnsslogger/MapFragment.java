@@ -330,13 +330,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public boolean onMarkerClick(Marker marker) {
         select_marker = marker;
 
-        return false;
+        return true;
     }
 
     @Override
     public void onMyLocationChange(Location location) {
 
+
+
+
     }
-
-
 }
