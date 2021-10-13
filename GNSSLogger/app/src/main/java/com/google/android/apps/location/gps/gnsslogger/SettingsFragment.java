@@ -112,7 +112,7 @@ public class SettingsFragment extends Fragment {
       changeText.setHint("Device_Name(" +Build.MODEL+")");
       MeasurementURLText =(EditText)view.findViewById(R.id.measurment_urlText);
 
-      String filePath= Environment.getExternalStorageDirectory()+"/gnss_log/file_Settings.txt";
+      String filePath= Environment.getExternalStorageDirectory()+"/gnss_log/Debug/file_Settings.txt";
       File settingFile = new File(filePath);
       if(settingFile.exists()){
 

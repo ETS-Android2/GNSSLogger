@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -53,7 +55,7 @@ import java.util.Set;
  * A map fragment to show the computed least square position and the device computed position on
  * Google map.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationChangeListener {
     private static final float ZOOM_LEVEL = 15;
     private static final String TAG = "MapFragment";
     private RealTimePositionVelocityCalculator mPositionVelocityCalculator;
@@ -74,6 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     LatLng lastPosition = null;
     MarkerOptions last_marker = null;
+    Marker select_marker= null;
 
     Context con;
 
@@ -100,8 +103,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mMapView = ((MapView) rootView.findViewById(R.id.map));
         mMapView.onCreate(savedInstanceState);
-
         mMapView.getMapAsync(this);
+
+
+
         lat_Text = rootView.findViewById(R.id.map_lat_text);
         lng_Text = rootView.findViewById(R.id.map_lng_text);
 
@@ -178,6 +183,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(false);
+
+        mMap.setOnMyLocationChangeListener(this);
+        mMap.setOnMarkerClickListener(this);
+
     }
 
     public void setPositionVelocityCalculator(RealTimePositionVelocityCalculator value) {
@@ -263,7 +272,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         );
     }
 
-    public void AddPoint(LatLng position,float speed , float breading) {
+  //  public void AddPoint(LatLng position,float speed , float breading) {
+    public void AddPoint(LatLng position) {
 
         if (last_marker != null) {
             last_marker.icon(bitmapDescriptorFromVector(con, R.drawable.ic_baseline_sentiment_very_satisfied_24));
@@ -271,8 +281,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         lat_Text.setText(String.valueOf(position.latitude));
         lng_Text.setText(String.valueOf(position.longitude));
-        cog_Text .setText(String.valueOf(breading));
-        sog_Text.setText(String.valueOf( speed));
+//        cog_Text .setText(String.valueOf(breading));
+//        sog_Text.setText(String.valueOf( speed));
 
         MarkerOptions mapMaker = new MarkerOptions()
                 .position(position)
@@ -292,8 +302,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public void MapRemoveAll() {
         mMap.clear();
+    }
+
+
+    public void SetLocation(String speed, String bearing){
+        cog_Text .setText(bearing);
+        sog_Text.setText(speed);
+
+        cog_Text .setText(String.valueOf(bearing));
+        sog_Text.setText(String.valueOf( speed));
 
     }
+
+
 
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
@@ -304,4 +325,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        select_marker = marker;
+
+        return false;
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+
+    }
+
+
 }

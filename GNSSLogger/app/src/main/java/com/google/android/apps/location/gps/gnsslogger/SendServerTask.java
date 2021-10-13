@@ -1,28 +1,46 @@
 package com.google.android.apps.location.gps.gnsslogger;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.HttpClient;
 
+//
 //import com.github.petr_s.nmea.GpsSatellite;
 //import com.github.petr_s.nmea.NMEAHandler;
 //import com.github.petr_s.nmea.NMEAParser;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+
 
 public class SendServerTask extends AsyncTask<String, Void, String> {
 
@@ -31,17 +49,15 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     private ContentValues value;
     private UiLogger uiLogger = null;
     private MapFragment mapFragment = null;
-
     private float GPSSpeed = 0.0f;
-    private float GPSBreaing= 0.0f;
+    private float GPSBreaing = 0.0f;
+    File baseDirectory = null;
 
     public SendServerTask() {
 
-
     }
 
-    public SendServerTask(String measureUrl, String Dataurl, ContentValues value,float speed, float bearing) {
-
+    public SendServerTask(String measureUrl, String Dataurl, ContentValues value, float speed, float bearing) {
         this.measurementUrl = measureUrl;
         this.url = Dataurl;
         this.value = value;
@@ -60,28 +76,115 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmart/" + "Raw," + url;
+        String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti";
 
+        String state = Environment.getExternalStorageState(); //상태
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            baseDirectory = new File(Environment.getExternalStorageDirectory(), "gnss_log/Debug");
+            if (!baseDirectory.exists()) {
+                //없으면 만듭니다
+                baseDirectory.mkdirs(); //파일을 생성합니다.
+            }
+        }
+
+        String sendData = "sendData.txt";
+        File sendDatafile = new File(baseDirectory, sendData);
+        BufferedWriter sendDataWr;
+        try {
+            sendDataWr = new BufferedWriter(new FileWriter(sendDatafile, true));
+            sendDataWr.write(Urlstring);
+            sendDataWr.newLine();
+            sendDataWr.newLine();
+            sendDataWr.flush();
+            sendDataWr.close();
+        } catch (IOException e) {
+
+        }
+
+        //경로값이 바뀌었을 경우 바뀐값을 저장해줍니다
         if (measurementUrl != null) {
 
+            String filePath = "file_Settings.txt";
+            File currentFile = new File(baseDirectory, filePath);
+            BufferedWriter currentFileWriter;
+            try {
+                currentFileWriter = new BufferedWriter(new FileWriter(currentFile));
+                currentFileWriter.write(measurementUrl);
+                currentFileWriter.flush();
+                currentFileWriter.close();
 
-            File baseDirectory = null;
-            String state = Environment.getExternalStorageState(); //상태
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                baseDirectory = new File(Environment.getExternalStorageDirectory(), "gnss_log");
-                if(!baseDirectory.exists()){
-                    //없으면 만듭니다
-                    baseDirectory.mkdirs(); //파일을 생성합니다.
-                }
+            } catch (IOException e) {
+
+            }
+            Urlstring = "http://" + measurementUrl + "/ObservablesSmart/" + "Raw," + url;
+        }
+
+
+        try {
+            URL obj = new URL(Urlstring);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setDoInput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("User-Agent", "Java client");
+            conn.setRequestProperty("Accept", "*/*");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            url = "\"" + url + "\"";
+            byte[] outputInBytes = url.getBytes("UTF-8");
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.write(outputInBytes);
+            wr.flush();
+            wr.close();
+
+            int retCode = conn.getResponseCode();
+
+            if (retCode != HttpURLConnection.HTTP_OK) {
+                return null;
             }
 
-            String filePath ="file_Settings.txt";
-            File currentFile = new File(baseDirectory, filePath);
-            String currentFilePath = currentFile.getAbsolutePath();
+
+            InputStream is = conn.getInputStream(); //input스트림 개방
+
+            StringBuilder builder = new StringBuilder(); //문자열을 담기 위한 객체
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8")); //문자열 셋 세팅
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                builder.append(line + "\n");
+            }
+
+            String result = builder.toString();
+            return result;
+
+        } catch (Exception e) {
+            return "서버접속에 실패했습니다";
+            // e.printStackTrace();
+        }
+    }
+
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+
+        LoggerFragment.UIFragmentComponent component = uiLogger.getUiFragmentComponent();
+
+        if (result == null || result == "") {
+            component.logTextFragment("Result (PNT API):", "이상한값이 넘어와요!!!", Color.parseColor("#20B2AA"));
+        }
+
+        if (component != null) {
+            component.logTextFragment("Result (PNT API):", result, Color.parseColor("#ff0000"));
+
+
+            if (result.contains("NULL") == false) {
+
+                String filePath = "Debug.txt";
+                File currentFile = new File(baseDirectory, filePath);
                 BufferedWriter currentFileWriter;
                 try {
                     currentFileWriter = new BufferedWriter(new FileWriter(currentFile));
-                    currentFileWriter.write(measurementUrl);
+                    currentFileWriter.write("결과값 : " + result);
+                    currentFileWriter.newLine();
+                    currentFileWriter.write("================================================================");
                     currentFileWriter.flush();
                     currentFileWriter.close();
 
@@ -89,56 +192,20 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
                 }
 
-            Urlstring = "http://"+measurementUrl+"/ObservablesSmart/" + "Raw," + url;
-        }
-
-
-        URL url = null;
-        try {
-
-            url = new URL(Urlstring);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            String result = "";
-            String temp = "";
-
-            while ((temp = in.readLine()) != null) {
-                result += temp;
-
-            }
-
-            conn.disconnect();
-            in.close();
-            return result;
-
-        } catch (MalformedURLException e) {
-            //   System.out.println("================데이터 진행 불가==========");
-            e.printStackTrace();
-        } catch (IOException e) {
-            // System.out.println("=================데이터 진행 불가=========");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    //화면에 표출합니다 그림을
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-
-        LoggerFragment.UIFragmentComponent component = uiLogger.getUiFragmentComponent();
-        if (component != null) {
-            component.logTextFragment("Result (PNT API):", result, Color.parseColor("#ff0000"));
-
-
-            if (result.compareTo("$NULL*1B") != 0) {
                 //String test = "$GNGGA,175025.92,-36-23.320959,N,-123-01.752922,W,1,05,2.8,246.349,M,161.760,M,,*75";
+
                 String[] data = result.split(",");
+
+                if (data.length == 1) {
+                    component.logTextFragment("Result (PNT API):", result, Color.parseColor("#20B2AA"));
+                    return;
+                }
 
                 int min = Integer.parseInt(data[2].substring(0, 2));
                 //마이너스가 붙은경우.
                 float Lat1 = 0;
                 float Lat2;
-                try{
+                try {
                     if (min < 0) {
                         Lat1 = Float.parseFloat(data[2].substring(0, 3));
                         Lat2 = Float.parseFloat(data[2].substring(3));
@@ -160,15 +227,12 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
                         Lng2 = Float.parseFloat(data[4].substring(3));
                     }
 
-
                     float Lng = Lng1 + Lng2 / 60;
                     LatLng latLng = new LatLng(Lat, Lng);
 
-
-
-                    mapFragment.AddPoint(latLng,GPSSpeed,GPSBreaing);
-                }
-                catch(Exception e){
+                    mapFragment.AddPoint(latLng);
+                    //mapFragment.AddPoint(latLng,GPSSpeed,GPSBreaing);
+                } catch (Exception e) {
 
                     return;
                 }

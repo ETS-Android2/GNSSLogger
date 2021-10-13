@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -364,36 +365,43 @@ public class FileLogger implements GnssListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-            synchronized (mFileLock) {
-                if (mFileWriter == null) {
-                    return;
-                }
 
+        GPSspeed= location.getSpeed(); //gps의 속도값
+        GPSbearing = location.getBearingAccuracyDegrees();
 
-                String locationStream =
-                        String.format(
-                                Locale.US,
-                                "Fix,%s,%f,%f,%f,%f,%f,%d",
-                                location.getProvider(),
-                                location.getLatitude(),
-                                location.getLongitude(),
-                                location.getAltitude(),
-                                location.getSpeed(),
-                                location.getAccuracy(),
-                                location.getTime());
+        mapFragment.SetLocation(String.valueOf( GPSspeed),String.valueOf(GPSbearing));
 
-                GPSspeed= location.getSpeed(); //gps의 속도값
-                GPSbearing = location.getBearing();
-
-                try {
-                    mFileWriter.write(locationStream);
-                    mFileWriter.newLine();
-                } catch (IOException e) {
-                    logException(ERROR_WRITING_FILE, e);
-                }
-            }
-        }
+//        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+//            synchronized (mFileLock) {
+//                if (mFileWriter == null) {
+//                    return;
+//                }
+//
+//
+//                String locationStream =
+//                        String.format(
+//                                Locale.US,
+//                                "Fix,%s,%f,%f,%f,%f,%f,%d",
+//                                location.getProvider(),
+//                                location.getLatitude(),
+//                                location.getLongitude(),
+//                                location.getAltitude(),
+//                                location.getSpeed(),
+//                                location.getAccuracy(),
+//                                location.getTime());
+//
+//               // mapFragment
+//
+//                //여기서 값을 수정하는 방향으로 생각해야 할껏같습니다
+//
+//                try {
+//                    mFileWriter.write(locationStream);
+//                    mFileWriter.newLine();
+//                } catch (IOException e) {
+//                    logException(ERROR_WRITING_FILE, e);
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -407,15 +415,23 @@ public class FileLogger implements GnssListener {
                 return;
             }
             GnssClock gnssClock = event.getClock();
+
+
+        //    Collection<GnssMeasurement> test = event.getMeasurements();
+            String value="";
             for (GnssMeasurement measurement : event.getMeasurements()) {
                 try {
 
-                    writeGnssMeasurementToFile(gnssClock, measurement);
+                    value +="Raw,"+ writeGnssMeasurementToFile(gnssClock, measurement)+";";
+
 
                 } catch (IOException e) {
                     logException(ERROR_WRITING_FILE, e);
                 }
             }
+            SendServerData(value);
+
+
         }
     }
 
@@ -491,7 +507,8 @@ public class FileLogger implements GnssListener {
     }
 
 
-    private void writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
+    private String writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
+   // private void writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
             throws IOException {
         String clockStream =
 
@@ -542,10 +559,13 @@ public class FileLogger implements GnssListener {
                                 : "",
                         measurement.hasCarrierFrequencyHz() ? measurement.getCarrierFrequencyHz() : "");
 
-        SendServerData(clockStream + measurementStream);
+        //SendServerData(clockStream + measurementStream);
 
         mFileWriter.write(measurementStream);
         mFileWriter.newLine();
+
+        return clockStream + measurementStream;
+
     }
 
     public void ShowTitleBar() {
@@ -592,11 +612,15 @@ public class FileLogger implements GnssListener {
             if (value != "") {
                 ShowTitleBar();
 
-                send = new SendServerTask(measurementUrl, value, null,speed, bearing);
-                send.setUILogger(uiLogger);
-                send.setMapFragment(mapFragment);
-                send.execute();
-
+                try{
+                    send = new SendServerTask(measurementUrl, value, null,speed, bearing);
+                    send.setUILogger(uiLogger);
+                    send.setMapFragment(mapFragment);
+                    send.execute();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
         } else {
