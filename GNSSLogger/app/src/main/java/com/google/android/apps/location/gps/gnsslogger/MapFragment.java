@@ -274,7 +274,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
   //  public void AddPoint(LatLng position,float speed , float breading) {
     public void AddPoint(LatLng position) {
-
+        mMap.clear();
         if (last_marker != null) {
             last_marker.icon(bitmapDescriptorFromVector(con, R.drawable.ic_baseline_sentiment_very_satisfied_24));
         }

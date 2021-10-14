@@ -76,7 +76,11 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti";
+
+        String devicename= ((MainActivity)MainActivity.context).DeviceName;
+
+
+        String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti"+"/"+devicename;
 
         String state = Environment.getExternalStorageState(); //상태
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -117,7 +121,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
             }
           //  Urlstring = "http://" + measurementUrl + "/ObservablesSmartMulti/" + "Raw," + url;
-            Urlstring = "http://" + measurementUrl + "/ObservablesSmartMulti";
+            Urlstring = "http://" + measurementUrl + "/ObservablesSmartMulti"+"/"+devicename;;
         }
 
 
