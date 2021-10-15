@@ -102,17 +102,14 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
     double GPS_Position_x=0.0f, GPS_Position_y=0.0f, GPS_Position_z=0.0f;
     float Pressure;
 
-
     View rootView;
     //GPS 정보
-
     LocationManager LocMan;
     String provider;
-
     Location location1;
-
     LogThread logth =null;
 
+    public static boolean  startbt= false;
 
 
 
@@ -122,7 +119,7 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
     }
 
 
-    @Override //이걸
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_togglesenser, container, false);
@@ -135,10 +132,12 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
         txtAccelerometerX = (TextView) rootView.findViewById(R.id.AccelerometerX);
         txtAccelerometerY = (TextView) rootView.findViewById(R.id.AccelerometerY);
         txtAccelerometerZ = (TextView) rootView.findViewById(R.id.AccelerometerZ);
+
         //Geavity
         txtGravityX = (TextView) rootView.findViewById(R.id.GravityX);
         txtGravityY = (TextView) rootView.findViewById(R.id.GravityY);
         txtGravityZ = (TextView) rootView.findViewById(R.id.GravityZ);
+
         //자이로스코프
         txtGyroscopeX = (TextView) rootView.findViewById(R.id.GyroscopeX);
         txtGyroscopeY = (TextView) rootView.findViewById(R.id.GyroscopeY);
@@ -146,6 +145,7 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
         txtMagneticX = (TextView) rootView.findViewById(R.id.Magnetic_FieldX);
         txtMagneticY = (TextView) rootView.findViewById(R.id.Magnetic_FieldY);
         txtMagneticZ = (TextView) rootView.findViewById(R.id.Magnetic_FieldZ);
+
         //GPS값
         txtGPSPositionX = (TextView) rootView.findViewById(R.id.GPS_PositionX);
         txtGPSPositionY = (TextView) rootView.findViewById(R.id.GPS_PositionY);
@@ -166,8 +166,20 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
         btStart.setOnClickListener(this);
 
         btStop = (Button) rootView.findViewById(R.id.logger_stop);
-        btStop.setEnabled(false);
+       // btStop.setEnabled(false);
         btStop.setOnClickListener(this);
+
+        //메세지를 저장중이라면
+        if(startbt){
+            btStart.setEnabled(false);
+            btStop.setEnabled(true);
+        }
+        else{
+            btStart.setEnabled(true);
+            btStop.setEnabled(false);
+        }
+
+
 
         sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE); //센서 매니저 생성
 
@@ -386,17 +398,18 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
+
             case R.id.logger_start:
                 //버튼 활성화, 비활성화
+
                 Toast.makeText(getContext(), R.string.start_message, Toast.LENGTH_LONG).show(); //화면에 글자
               //  String state = Environment.getExternalStorageState(); //상태
-
                 String folderName = "gnss_log";
                 File dir = new File(Environment.getExternalStorageDirectory(), folderName);
                 if (!dir.exists()) {
                     dir.mkdir();
-
                     File log = new File(Environment.getExternalStorageDirectory() + "/" + folderName, "IMU");
                     log.mkdir();
                 } else { //이미있는경우
@@ -430,10 +443,9 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
                     writer.write(context); //들어갈 내용
                     writer.flush();
 
+                    startbt = true;
                     btStart.setEnabled(false);
                     btStop.setEnabled(true);
-
-
                 } catch (FileNotFoundException e) {
 
                     e.printStackTrace();
@@ -446,6 +458,7 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
             case R.id.logger_stop:
                 //view.
                 try {
+
                     if(writer==null||fos==null)
                     {
                         return;
@@ -456,6 +469,7 @@ public class ToggleFragment extends Fragment  implements SensorEventListener, Vi
                     writer.close();
                     fos.close();
 
+                    startbt = false;
                     btStart.setEnabled(true);
                     btStop.setEnabled(false);
 

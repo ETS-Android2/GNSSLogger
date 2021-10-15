@@ -102,6 +102,12 @@ public class SettingsFragment extends Fragment {
   }
 
   @Override
+  public void onCreate(Bundle savedInstanceState) {
+
+      super.onCreate(savedInstanceState);
+  }
+
+  @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

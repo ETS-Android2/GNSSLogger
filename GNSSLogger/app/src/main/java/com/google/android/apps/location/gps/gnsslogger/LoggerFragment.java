@@ -363,7 +363,7 @@ public class LoggerFragment extends Fragment implements TimerListener {
                         @Override
                         public void run() {
                             mLogView.append(builder);
-                            SendJsonDataToServer(tag,builder.toString());
+                           SendJsonDataToServer(tag,builder.toString());
 
                             SharedPreferences sharedPreferences = PreferenceManager.
                                     getDefaultSharedPreferences(getActivity());

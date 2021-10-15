@@ -76,7 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     LatLng lastPosition = null;
     MarkerOptions last_marker = null;
-    Marker select_marker= null;
+    //Marker select_marker= null;
 
     Context con;
 
@@ -157,9 +157,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+
 //    if (mMap != null) {
 //      mMap.clear();
 //    }
+
         mLastLocationMarkerRaw = null;
         mLastLocationMarkerDevice = null;
     }
@@ -274,10 +276,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
   //  public void AddPoint(LatLng position,float speed , float breading) {
     public void AddPoint(LatLng position) {
+
         mMap.clear();
-        if (last_marker != null) {
-            last_marker.icon(bitmapDescriptorFromVector(con, R.drawable.ic_baseline_sentiment_very_satisfied_24));
-        }
+//        if (last_marker != null) {
+//            last_marker.icon(bitmapDescriptorFromVector(con, R.drawable.ic_baseline_sentiment_very_satisfied_24));
+//        }
 
         lat_Text.setText(String.valueOf(position.latitude));
         lng_Text.setText(String.valueOf(position.longitude));
@@ -294,15 +297,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.addMarker(mapMaker);
 
         lastPosition = position;
-        last_marker = mapMaker;
+         last_marker = mapMaker;
 
 
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, ZOOM_LEVEL));
     }
 
-    public void MapRemoveAll() {
-        mMap.clear();
-    }
 
 
     public void SetLocation(String speed, String bearing){
@@ -328,7 +328,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        select_marker = marker;
+      //  select_marker = marker;
 
         return true;
     }

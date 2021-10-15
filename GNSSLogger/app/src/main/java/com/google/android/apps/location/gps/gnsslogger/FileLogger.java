@@ -63,7 +63,10 @@ public class FileLogger implements GnssListener {
 
     private static final String TAG = "FileLogger";
     private static final String FILE_PREFIX = "gnss_log";
+
     private static final String MEASUREMENT_LOG = "measurement_log";
+   // private static final String FIX_LOG = "fix_log";
+
     private static final String ERROR_WRITING_FILE = "Problem writing to file.";
     private static final String COMMENT_START = "# ";
     private static final char RECORD_DELIMITER = ',';
@@ -76,6 +79,8 @@ public class FileLogger implements GnssListener {
 
     private final Object mFileLock = new Object();
     private BufferedWriter mFileWriter;
+    //private BufferedWriter mFileWriter;
+  //  private BufferedWriter mFixWriter;
     private File mFile;
 
     private UIFragmentComponent mUiComponent;
@@ -240,6 +245,7 @@ public class FileLogger implements GnssListener {
 
     public void startMeasurementLog() {
         synchronized (mFileLock) {
+
             //multi-thread로 동시접근되는것을 막는다
             File baseDirectory;
             String state = Environment.getExternalStorageState(); //상태
@@ -254,23 +260,50 @@ public class FileLogger implements GnssListener {
                 return;
             }
 
+            //gnss_logger 를 만듭니다
+
+
+
             SimpleDateFormat formatter = new SimpleDateFormat("yyy_MM_dd_HH_mm_ss");
             Date now = new Date();
-            String fileName = String.format("%s_%s.txt", MEASUREMENT_LOG, formatter.format(now));
+
+            String fileName = String.format("%s_%s.txt", MEASUREMENT_LOG, formatter.format(now)); //measurement txt를 저장합니다
+           // String FixFileName =  String.format("%s_%s.txt", FIX_LOG, formatter.format(now)); //fix 값을 저장합니다
+
+
+
             File currentFile = new File(baseDirectory, fileName);
-            String currentFilePath = currentFile.getAbsolutePath();
+           // File FixFile = new File(baseDirectory,FixFileName);
+
+
+          //  String currentFilePath = currentFile.getAbsolutePath();
+         //   String fixFilePath = FixFile.getAbsolutePath();
+
+
             BufferedWriter currentFileWriter;
+          //  BufferedWriter fixFileWriter ;
+
+
             try {
                 currentFileWriter = new BufferedWriter(new FileWriter(currentFile));
+
             } catch (IOException e) {
-                logException("Could not open file: " + currentFilePath, e);
+              //  int i =0;
                 return;
             }
+
+//            try {
+//                fixFileWriter = new BufferedWriter(new FileWriter(FixFile));
+//            } catch (IOException e) {
+//                logException("왜죽고 난ㄹ", e);
+//                return;
+//            }
+
 
             try {
 
                 currentFileWriter.write(
-                        "ElapsedRealtimeMillis,TimeNanos,LeapSecond,TimeUncertaintyNanos,FullBiasNanos,"
+                        "Raw,ElapsedRealtimeMillis,TimeNanos,LeapSecond,TimeUncertaintyNanos,FullBiasNanos,"
                                 + "BiasNanos,BiasUncertaintyNanos,DriftNanosPerSecond,DriftUncertaintyNanosPerSecond,"
                                 + "HardwareClockDiscontinuityCount,Svid,TimeOffsetNanos,State,ReceivedSvTimeNanos,"
                                 + "ReceivedSvTimeUncertaintyNanos,Cn0DbHz,PseudorangeRateMetersPerSecond,"
@@ -280,9 +313,15 @@ public class FileLogger implements GnssListener {
                                 + "CarrierPhase,CarrierPhaseUncertainty,MultipathIndicator,SnrInDb,"
                                 + "ConstellationType,AgcDb,CarrierFrequencyHz");
                 currentFileWriter.newLine();
+//
+//                fixFileWriter.write("# Fix,Provider,Latitude,Longitude,Altitude,Speed,Accuracy,(UTC)TimeInMs");
+//                fixFileWriter.newLine();
+               // fixFileWriter.flush();
+
 
             } catch (IOException e) {
-                logException("Count not initialize file: " + currentFilePath, e);
+                logException("왜죽고 난ㄹ", e);
+              //  logException("Count not initialize file: " + currentFilePath, e);
                 return;
             }
 
@@ -295,12 +334,30 @@ public class FileLogger implements GnssListener {
                 }
             }
 
+//            if (mFixWriter!=null)
+//            {
+//                try {
+//                    mFixWriter.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
+
             mFile = currentFile;
+
+          //  mFixWriter = fixFileWriter;
             mFileWriter = currentFileWriter;
-            Toast.makeText(mContext, "File opened: " + currentFilePath, Toast.LENGTH_SHORT).show();
+
+            //Toast.makeText(mContext, "File opened: " + currentFilePath, Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(mContext, "Measurement LOG start", Toast.LENGTH_SHORT).show();
 
             // To make sure that files do not fill up the external storage:
             // - Remove all empty files
+
+
+
             FileFilter filter = new FileToDeleteFilter(mFile);
             for (File existingFile : baseDirectory.listFiles(filter)) {
                 existingFile.delete();
@@ -336,6 +393,7 @@ public class FileLogger implements GnssListener {
         emailIntent.putExtra(Intent.EXTRA_STREAM, fileURI);
         getUiComponent().startActivity(Intent.createChooser(emailIntent, "Send log.."));
         //  issendMeasureData = false;
+
         if (mFileWriter != null) {
             try {
                 mFileWriter.flush();
@@ -353,6 +411,28 @@ public class FileLogger implements GnssListener {
                 return;
             }
         }
+
+//        if(mFixWriter != null){
+//
+//            try {
+//                mFixWriter.flush();
+//                mFixWriter.close();
+//                mFixWriter = null;
+////                if (send != null) {
+////                    SendDatatoServer(false, "",0.0f, 0.0f);
+////
+////                }
+//                //thread.interrupt(); //Measurement를 서버로 보내는걸 중단합니다
+//
+//
+//            } catch (IOException e) {
+//                logException("Unable to close all file streams.", e);
+//                return;
+//            }
+//        }
+
+
+
     }
 
     @Override
@@ -371,37 +451,37 @@ public class FileLogger implements GnssListener {
 
         mapFragment.SetLocation(String.valueOf( GPSspeed),String.valueOf(GPSbearing));
 
-//        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-//            synchronized (mFileLock) {
-//                if (mFileWriter == null) {
-//                    return;
-//                }
-//
-//
-//                String locationStream =
-//                        String.format(
-//                                Locale.US,
-//                                "Fix,%s,%f,%f,%f,%f,%f,%d",
-//                                location.getProvider(),
-//                                location.getLatitude(),
-//                                location.getLongitude(),
-//                                location.getAltitude(),
-//                                location.getSpeed(),
-//                                location.getAccuracy(),
-//                                location.getTime());
-//
-//               // mapFragment
-//
-//                //여기서 값을 수정하는 방향으로 생각해야 할껏같습니다
-//
-//                try {
-//                    mFileWriter.write(locationStream);
-//                    mFileWriter.newLine();
-//                } catch (IOException e) {
-//                    logException(ERROR_WRITING_FILE, e);
-//                }
-//            }
-//        }
+        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+
+            synchronized (mFileLock) {
+
+                if (mFileWriter == null) {
+                    return;
+                }
+
+                String locationStream =
+                        String.format(
+                                Locale.US,
+                                "Fix,%s,%f,%f,%f,%f,%f,%d",
+                                location.getProvider(),
+                                location.getLatitude(),
+                                location.getLongitude(),
+                                location.getAltitude(),
+                                location.getSpeed(),
+                                location.getAccuracy(),
+                                location.getTime());
+
+                try {
+                    mFileWriter.write(locationStream);
+                    mFileWriter.newLine();
+
+                   // mFixWriter.flush();
+
+                } catch (IOException e) {
+                    logException(ERROR_WRITING_FILE, e);
+                }
+            }
+        }
     }
 
     @Override
@@ -422,7 +502,7 @@ public class FileLogger implements GnssListener {
             for (GnssMeasurement measurement : event.getMeasurements()) {
                 try {
 
-                    value +="Raw,"+ writeGnssMeasurementToFile(gnssClock, measurement)+";";
+                    value += writeGnssMeasurementToFile(gnssClock, measurement)+";";
 
 
                 } catch (IOException e) {
@@ -430,8 +510,6 @@ public class FileLogger implements GnssListener {
                 }
             }
             SendServerData(value);
-
-
         }
     }
 
@@ -513,7 +591,7 @@ public class FileLogger implements GnssListener {
         String clockStream =
 
                 String.format(
-                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                        "Raw,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         SystemClock.elapsedRealtime(),
                         clock.getTimeNanos(),
                         clock.hasLeapSecond() ? clock.getLeapSecond() : "",
@@ -603,7 +681,7 @@ public class FileLogger implements GnssListener {
 
     //지정한 서버로 데이터를 보냅니다
     private void SendServerData(final String value) {
-        SendDatatoServer(true, value,GPSspeed,GPSbearing);
+       SendDatatoServer(true, value,GPSspeed,GPSbearing);
     }
 
     public void SendDatatoServer(boolean isRun, String value, float speed, float bearing) {
@@ -625,8 +703,12 @@ public class FileLogger implements GnssListener {
 
         } else {
             //send.stopMapDrawing()
-            send.cancel(true);
-            manager.cancel(1);
+            if(send!=null)
+            {
+                send.cancel(true);
+                manager.cancel(1);
+            }
+
         }
     }
 
