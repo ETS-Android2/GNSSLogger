@@ -48,6 +48,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     private String url;
     private ContentValues value;
     private UiLogger uiLogger = null;
+    private String serverNum = null;
     private MapFragment mapFragment = null;
     private float GPSSpeed = 0.0f;
     private float GPSBreaing = 0.0f;
@@ -57,12 +58,15 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
     }
 
-    public SendServerTask(String measureUrl, String Dataurl, ContentValues value, float speed, float bearing) {
+    //public SendServerTask(String measureUrl, String Dataurl, ContentValues value, float speed, float bearing) {
+    public SendServerTask(String measureUrl, String Dataurl,String serverNum,ContentValues value, float speed, float bearing) {
         this.measurementUrl = measureUrl;
         this.url = Dataurl;
         this.value = value;
         this.GPSSpeed = speed;
         this.GPSBreaing = bearing;
+        this.serverNum = serverNum;
+
     }
 
     public void setUILogger(UiLogger ui) {
@@ -77,9 +81,12 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
 
 
-        String devicename= ((MainActivity)MainActivity.context).DeviceName;
-
-
+        String devicename= serverNum;
+        if(serverNum=="")
+        {
+            int i=0;
+        }
+        //String devicename= ((MainActivity)MainActivity.context).DeviceName;
         String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti"+"/"+devicename;
 
         String state = Environment.getExternalStorageState(); //상태

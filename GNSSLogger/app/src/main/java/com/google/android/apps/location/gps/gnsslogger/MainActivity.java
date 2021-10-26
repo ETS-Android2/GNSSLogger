@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     private boolean mAutoSwitchGroundTruthMode;
 
     public static Context context;
-    public String DeviceName = Build.MODEL;
+    //public String DeviceName = Build.MODEL;
 
     private SettingsFragment settingsFragment;
 
@@ -218,19 +218,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     //디바이스 이름을 수정합니다.
-    public void DeviceIdChange(View view) {
-     //   sendNotification();
-
-
-
-        String changeText = settingsFragment.changeText.getText().toString();
-        if (changeText.length() == 0) {
-            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
-        } else {
-            DeviceName = changeText;
-            Toast.makeText(this, "Device Name Changed : " + DeviceName, Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void DeviceIdChange(View view) {
+//     //   sendNotification();
+//        String changeText = settingsFragment.changeText.getText().toString();
+//
+//
+//        if (changeText.length() == 0) {
+//            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+//        } else {
+//            DeviceName = changeText;
+//            Toast.makeText(this, "Device Name Changed : " + DeviceName, Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
 
     /**
@@ -444,8 +443,4 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
-
-
 }
-

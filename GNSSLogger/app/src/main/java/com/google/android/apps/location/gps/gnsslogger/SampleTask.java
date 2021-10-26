@@ -28,8 +28,8 @@ public class SampleTask extends AsyncTask<String, Void, String> {
             conn.setRequestMethod("POST");
             JSONObject jsonObject = new JSONObject();
 
-            String devicename= ((MainActivity)MainActivity.context).DeviceName;
-            jsonObject.accumulate("deviceid",devicename);
+           // String devicename= ((MainActivity)MainActivity.context).DeviceName;
+           // jsonObject.accumulate("deviceid",devicename);
             jsonObject.accumulate("type",params[0]);
             jsonObject.accumulate("log", params[1]);
 

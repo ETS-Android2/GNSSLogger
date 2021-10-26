@@ -107,6 +107,8 @@ public class FileLogger implements GnssListener {
     private NotificationManager manager;
 
     public String measurementUrl = "";
+    public String serverNum ="";
+
 
     private UiLogger uiLogger = null;
     // public boolean issendMeasureData = false;
@@ -240,6 +242,10 @@ public class FileLogger implements GnssListener {
 
     public void setMeasurmentUrl(String url) {
         measurementUrl = url;
+    }
+
+    public void setServerNum(String value){
+        serverNum = value;
     }
 
     public void startMeasurementLog() {
@@ -689,7 +695,7 @@ public class FileLogger implements GnssListener {
                 ShowTitleBar();
 
                 try{
-                    send = new SendServerTask(measurementUrl, value, null,speed, bearing);
+                    send = new SendServerTask(measurementUrl, value,serverNum, null,speed, bearing);
                     send.setUILogger(uiLogger);
                     send.setMapFragment(mapFragment);
                     send.execute();

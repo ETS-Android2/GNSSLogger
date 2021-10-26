@@ -57,8 +57,8 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class SettingsFragment extends Fragment {
 
-    public Button changeButton;
-    public EditText changeText;
+  //  public Button changeButton;
+    public static EditText changeText;
     public static EditText MeasurementURLText;
 
     //public static String meaurl="";
@@ -113,10 +113,11 @@ public class SettingsFragment extends Fragment {
 
       final View view = inflater.inflate(R.layout.fragment_main, container, false /* attachToRoot */);
 
-      changeButton = (Button) view.findViewById(R.id.device_name_button);
+    //  changeButton = (Button) view.findViewById(R.id.device_name_button);
       changeText = (EditText)view.findViewById(R.id.device_name_id);
       changeText.setHint("Device_Name(" +Build.MODEL+")");
       MeasurementURLText =(EditText)view.findViewById(R.id.measurment_urlText);
+
 
       String filePath= Environment.getExternalStorageDirectory()+"/gnss_log/Debug/file_Settings.txt";
       File settingFile = new File(filePath);

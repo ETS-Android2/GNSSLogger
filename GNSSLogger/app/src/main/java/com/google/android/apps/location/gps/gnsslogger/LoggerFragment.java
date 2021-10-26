@@ -253,12 +253,16 @@ public class LoggerFragment extends Fragment implements TimerListener {
                         Toast.makeText(getContext(),"Measurement Button start", Toast.LENGTH_LONG).show(); //화면에 글자 표출
 
                         String value= SettingsFragment.MeasurementURLText.getText().toString();
+                        String numValue = SettingsFragment.changeText.getText().toString();
+
                         if( SettingsFragment.MeasurementURLText.getText().toString().isEmpty()){
                             value= null;
                         }
 
                         mFileLogger.setUILogger(currentUiLogger);
                         mFileLogger.setMeasurmentUrl(value);
+                        mFileLogger.setServerNum(numValue);
+
                         mFileLogger.startMeasurementLog(); //메져먼트 로그를 txt 파일로 뽑거나 서버로 보냅니다
 
                         if (!mTimerValues.isZero() && (mTimerService != null)) {
