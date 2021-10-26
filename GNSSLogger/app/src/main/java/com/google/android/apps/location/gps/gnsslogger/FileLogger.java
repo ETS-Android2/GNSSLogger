@@ -79,8 +79,7 @@ public class FileLogger implements GnssListener {
 
     private final Object mFileLock = new Object();
     private BufferedWriter mFileWriter;
-    //private BufferedWriter mFileWriter;
-  //  private BufferedWriter mFixWriter;
+
     private File mFile;
 
     private UIFragmentComponent mUiComponent;
@@ -584,9 +583,8 @@ public class FileLogger implements GnssListener {
     public void onTTFFReceived(long l) {
     }
 
-
+    //메져먼트 파일을 씁니다
     private String writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
-   // private void writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
             throws IOException {
         String clockStream =
 

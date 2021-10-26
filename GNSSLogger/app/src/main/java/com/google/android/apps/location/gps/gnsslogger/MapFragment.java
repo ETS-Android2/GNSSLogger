@@ -297,9 +297,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.addMarker(mapMaker);
 
         lastPosition = position;
-         last_marker = mapMaker;
-
-
+        last_marker = mapMaker;
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, ZOOM_LEVEL));
     }
 
