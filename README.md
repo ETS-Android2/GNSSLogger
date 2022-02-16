@@ -124,3 +124,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
+![GNSSLogger_메인화면](https://user-images.githubusercontent.com/31871417/154209835-f02e9ee5-0f89-4886-b217-d63a1c71ac92.jpg)
