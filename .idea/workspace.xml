@@ -25,19 +25,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3a101eac-ee38-406c-a999-3ceee180ce14" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/SendServerTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/gc.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/FileLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/FileLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/LoggerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/LoggerFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/SampleTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/SampleTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/ToggleFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/app/src/main/java/com/google/android/apps/location/gps/gnsslogger/ToggleFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNSSLogger/app/src/main/res/layout/fragment_log.xml" beforeDir="false" afterPath="$PROJECT_DIR$/GNSSLogger/app/src/main/res/layout/fragment_log.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +66,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/GNSSLogger" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/GNSSLogger/build.gradle" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.1525" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -108,25 +101,9 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1066" y="496" key="#Gradle" timestamp="1630975432790">
+    <state x="1059" y="454" key="FileChooserDialogImpl" timestamp="1644993263825">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1066" y="496" key="#Gradle/-1920.0.1920.1160/0.0.2560.1400/2560.0.1200.1880@0.0.2560.1400" timestamp="1630975432790" />
-    <state x="797" y="446" key="#PSD" timestamp="1630975582151">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="797" y="446" key="#PSD/-1920.0.1920.1160/0.0.2560.1400/2560.0.1200.1880@0.0.2560.1400" timestamp="1630975582151" />
-    <state x="1060" y="441" key="FileChooserDialogImpl" timestamp="1630975431592">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1060" y="441" key="FileChooserDialogImpl/-1920.0.1920.1160/0.0.2560.1400/2560.0.1200.1880@0.0.2560.1400" timestamp="1630975431592" />
-    <state x="781" y="344" key="SettingsEditor" timestamp="1630975543460">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="781" y="344" key="SettingsEditor/-1920.0.1920.1160/0.0.2560.1400/2560.0.1200.1880@0.0.2560.1400" timestamp="1630975543460" />
-    <state x="988" y="432" width="584" height="536" key="find.popup" timestamp="1630975213312">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="988" y="432" width="584" height="536" key="find.popup/-1920.0.1920.1160/0.0.2560.1400/2560.0.1200.1880@0.0.2560.1400" timestamp="1630975213312" />
+    <state x="1059" y="454" key="FileChooserDialogImpl/-1920.0.1920.1160/0.0.2560.1400/2560.0.1200.1880@0.0.2560.1400" timestamp="1644993263825" />
   </component>
 </project>

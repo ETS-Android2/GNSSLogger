@@ -64,7 +64,7 @@ public class FileLogger implements GnssListener {
     private static final String TAG = "FileLogger";
     private static final String FILE_PREFIX = "gnss_log";
 
-    private static final String MEASUREMENT_LOG = "measurement_log";
+    private static final String MEASUREMENT_LOG = "GnssMeasurementmeasurement_log";
    // private static final String FIX_LOG = "fix_log";
 
     private static final String ERROR_WRITING_FILE = "Problem writing to file.";
@@ -593,7 +593,6 @@ public class FileLogger implements GnssListener {
     private String writeGnssMeasurementToFile(GnssClock clock, GnssMeasurement measurement)
             throws IOException {
         String clockStream =
-
                 String.format(
                         "Raw,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         SystemClock.elapsedRealtime(),
@@ -646,7 +645,9 @@ public class FileLogger implements GnssListener {
         mFileWriter.write(measurementStream);
         mFileWriter.newLine();
 
-        return clockStream + measurementStream;
+        String result = clockStream + measurementStream;
+        return result;
+
 
     }
 

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 //import org.apache.http.HttpResponse;
 //import org.apache.http.client.HttpClient;
@@ -87,7 +88,9 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             int i=0;
         }
         //String devicename= ((MainActivity)MainActivity.context).DeviceName;
-        String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti"+"/"+devicename;
+        //String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti"+"/"+devicename;
+        String Urlstring = "http://192.168.0.6:5000/ObservablesSmartMulti"+"/"+devicename;
+       //String Urlstring = "http://172.16.196.6:5000/ObservablesSmartMulti"+"/"+devicename;
 
         String state = Environment.getExternalStorageState(); //상태
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -141,17 +144,22 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Accept", "*/*");
             conn.setRequestProperty("Content-Type", "application/json");
 
+            //서버에 데이터를 보내고 결과값을 전달받습니다
             url = "\"" + url + "\"";
             byte[] outputInBytes = url.getBytes("UTF-8");
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
             wr.write(outputInBytes);
+
+            Log.i("보내는 데이터",url);
+
+
             wr.flush();
             wr.close();
 
             int retCode = conn.getResponseCode();
 
             if (retCode != HttpURLConnection.HTTP_OK) {
-                return null;
+                return "연결에 실패했습니다";
             }
 
 
@@ -159,7 +167,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
 
             StringBuilder builder = new StringBuilder(); //문자열을 담기 위한 객체
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8")); //문자열 셋 세팅
-            String line;
+            String line ;
 
             while ((line = reader.readLine()) != null) {
                 builder.append(line + "\n");
@@ -169,7 +177,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             return result;
 
         } catch (Exception e) {
-            return "서버접속에 실패했습니다";
+            return e+"서버접속에 실패했습니다";
             // e.printStackTrace();
         }
     }
@@ -180,8 +188,15 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
         LoggerFragment.UIFragmentComponent component = uiLogger.getUiFragmentComponent();
 
         if (result == null || result == "") {
-            component.logTextFragment("Result (PNT API):", "이상한값이 넘어와요!!!", Color.parseColor("#20B2AA"));
+            component.logTextFragment("Result (PNT API):", "비어있는값이 넘어와요;;", Color.parseColor("#20B2AA"));
         }
+        else{
+            if(result=="연결에 실패했습니다"){
+                component.logTextFragment("Result (PNT API):", "연결에 실패했습니다 주소값을 확인해주세요", Color.parseColor("#20B2AA"));
+            }
+
+        }
+
 
         if (component != null) {
             component.logTextFragment("Result (PNT API):", result, Color.parseColor("#ff0000"));
