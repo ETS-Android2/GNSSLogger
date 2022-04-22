@@ -90,7 +90,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
         //String devicename= ((MainActivity)MainActivity.context).DeviceName;
         //String Urlstring = "http://theprost8004.iptime.org:50080/ObservablesSmartMulti"+"/"+devicename;
         String Urlstring = "http://192.168.0.6:5000/ObservablesSmartMulti"+"/"+devicename;
-       //String Urlstring = "http://172.16.196.6:5000/ObservablesSmartMulti"+"/"+devicename;
+
 
         String state = Environment.getExternalStorageState(); //상태
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -163,6 +163,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             }
 
 
+            //서버와 통신했던 결과물을 받게됩니다
             InputStream is = conn.getInputStream(); //input스트림 개방
 
             StringBuilder builder = new StringBuilder(); //문자열을 담기 위한 객체
@@ -174,7 +175,7 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
             }
 
             String result = builder.toString();
-            return result;
+            return result; //통신결과물을 return 합니다 onPostExecute로 값이 넘어갑니다
 
         } catch (Exception e) {
             return e+"서버접속에 실패했습니다";
@@ -182,13 +183,14 @@ public class SendServerTask extends AsyncTask<String, Void, String> {
         }
     }
 
+    //doInBackground에서 return 된값이 매개변수로 넘어옵니다.
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
 
         LoggerFragment.UIFragmentComponent component = uiLogger.getUiFragmentComponent();
 
         if (result == null || result == "") {
-            component.logTextFragment("Result (PNT API):", "비어있는값이 넘어와요;;", Color.parseColor("#20B2AA"));
+            component.logTextFragment("Result (PNT API):", "서버통신의 결과물이 비어있습니다", Color.parseColor("#20B2AA"));
         }
         else{
             if(result=="연결에 실패했습니다"){
